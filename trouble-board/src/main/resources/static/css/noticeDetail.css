@@ -1,0 +1,66 @@
+.troubleDetail{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 150px;
+}
+
+.troubleDetail .div_1{
+    background-color: rgb(250, 225, 229);
+    align-content: center;
+    width: 1000px;
+    margin: 30px;
+    padding: 50px 0 50px 0;
+}
+
+.troubleDetail .div_1{
+    font-weight: bold;
+    font-size: 25px;
+}
+  
+.troubleDetail .div_2{
+    width: 1000px;
+}
+
+.troubleDetail .div_2 li{
+    padding-top: 5px;
+}
+
+.troubleDetail .div_2 input,
+.troubleDetail .div_2 textarea
+{
+    width: 1000px;
+}
+
+.troubleDetail .div_2 li:nth-of-type(1){
+    align-self: flex-start;
+    padding: 20px 0 5px 0;
+    border-top: 2px solid gray;
+}
+
+.troubleDetail .div_2 li:nth-of-type(2){
+    align-self: flex-start;
+    font-size: 10px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid lightgray;
+}
+
+.troubleDetail .div_2 li:nth-of-type(3){
+    margin: 20px 0px 50px 0px;
+}
+
+.troubleDetail .div_3{
+    display: flex;
+    width: 1000px;
+    justify-content: center;
+    padding-bottom: 50px;
+}
+
+.troubleDetail .div_3 button{
+    font-weight: bold;
+    padding: 5px;
+}
+

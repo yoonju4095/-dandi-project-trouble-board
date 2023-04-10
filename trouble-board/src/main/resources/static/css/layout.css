@@ -1,0 +1,301 @@
+@charset "utf-8";
+
+/* 전체 레이아웃 */
+#wrapper{
+  display: grid;
+  grid-template-columns: 1fr minmax(700px,1800px) 1fr;
+  grid-template-rows: 100px 70px auto 30px 72px;
+  grid-template-areas: 
+  "hs1 h hs2"
+  "gs3 g gs4"
+  "cs5 c cs6"
+  "fus7 fu fus8"
+  "fds9 fd fds10";
+}
+
+/* 공백 영역 */
+.sp1{grid-area: hs1;}
+.sp2{grid-area: hs2;}
+.sp3{grid-area: gs3;}
+.sp4{grid-area: gs4;}
+.sp5{grid-area: cs5;}
+.sp6{grid-area: cs6;}
+.sp7{grid-area: fus7;}
+.sp8{grid-area: fus8;}
+.sp9{grid-area: fds9;}
+.sp10{grid-area: fds10;}
+
+/* 헤더 */
+#header {
+  grid-area: h;
+  display: grid;
+  grid-template-areas: ". h1 h2 h3 h4";
+  grid-template-columns: auto 0.4fr 0.4fr 100px 100px;
+  grid-template-rows: 100px;
+}
+#header .header__title {
+  grid-area: h1;
+  justify-self: right;
+  align-self: end;
+  padding-bottom: 10px;
+  padding-right: 5px;
+}
+#header .header__subTitle {
+  grid-area: h2;
+  justify-self: start;
+  align-self: end;
+  padding-bottom: 10px;
+  padding-left: 5px;
+}
+#header .header__login {
+  grid-area: h3;
+  justify-self: right;
+  align-self: end;
+  padding-bottom: 10px;
+}
+#header .header__signUp {
+  grid-area: h4;
+  justify-self: right;
+  align-self: end;
+  padding-bottom: 10px;
+}
+/* 헤더 버튼 스타일 */
+#header .header__loginButton{
+  border: 2px solid var(--color-normal-gray);
+  background-color: white;
+  border-radius: 10px;
+  width: 60px;
+  height: 25px;
+  line-height: 100%;
+  font-size: 10pt;
+}
+#header .header__loginButton:hover{
+  border: 2px solid var(--color-normal-green);
+  background-color: white;
+  cursor: pointer;
+}
+#header .header__signUpButton{
+  border: 2px solid var(--color-normal-gray);
+  background-color: white;
+  border-radius: 10px;
+  width: 70px;
+  height: 25px;
+  line-height: 100%;
+  font-size: 10pt;
+}
+#header .header__signUpButton:hover{
+  border: 2px solid var(--color-normal-green);
+  background-color: white;
+  cursor: pointer;
+}
+/*                 */
+
+/* 지엔비 */
+#gnb {
+  grid-area: g;
+  display: flex;
+  justify-content: space-evenly;
+  width: auto;
+  height: 70px
+}
+#gnb .gnb__info,
+#gnb .gnb__cum,
+#gnb .gnb__member,
+#gnb .gnb__manager,
+#gnb .gnb__support {
+  width: 150px;
+  height: 100%;
+  line-height: 70px;
+}
+#gnb .gnb__infoLnb, 
+#gnb .gnb__cumLnb,
+#gnb .gnb__memberLnb1,
+#gnb .gnb__memberLnb2,
+#gnb .gnb__memberLnb3,
+#gnb .gnb__memberLnb4,
+#gnb .gnb__memberLnb5,
+#gnb .gnb__managerLnb1,
+#gnb .gnb__managerLnb2,
+#gnb .gnb__managerLnb3,
+#gnb .gnb__managerLnb4,
+#gnb .gnb__managerLnb5,
+#gnb .gnb__supportLnb1, 
+#gnb .gnb__supportLnb2, 
+#gnb .gnb__supportLnb3, 
+#gnb .gnb__supportLnb4 {
+  display: none;
+  width: 150px;
+  height: 30px;
+  line-height: 30px;
+}
+#gnb .gnb__info:hover .gnb__infoLnb{
+  display: block;
+  position: relative;
+}
+#gnb .gnb__cum:hover .gnb__cumLnb{
+  display: block;
+  position: relative;
+}
+#gnb .gnb__member:hover .gnb__memberLnb1,
+#gnb .gnb__member:hover .gnb__memberLnb2,
+#gnb .gnb__member:hover .gnb__memberLnb3,
+#gnb .gnb__member:hover .gnb__memberLnb4,
+#gnb .gnb__member:hover .gnb__memberLnb5 {
+  display: block;
+  position: relative;
+}
+#gnb .gnb__manager:hover .gnb__managerLnb1,
+#gnb .gnb__manager:hover .gnb__managerLnb2,
+#gnb .gnb__manager:hover .gnb__managerLnb3,
+#gnb .gnb__manager:hover .gnb__managerLnb4,
+#gnb .gnb__manager:hover .gnb__managerLnb5 {
+  display: block;
+  position: relative;
+}
+#gnb .gnb__support:hover .gnb__supportLnb1,
+#gnb .gnb__support:hover .gnb__supportLnb2,
+#gnb .gnb__support:hover .gnb__supportLnb3,
+#gnb .gnb__support:hover .gnb__supportLnb4 {
+  display: block;
+  position: relative;
+}
+
+/* 지엔비 스타일 커스텀 */
+#gnb{
+  box-sizing: border-box;
+  border-top: 2px solid var(--color-normal-gray);
+  border-bottom: 2px solid var(--color-normal-deep-green);
+  background-color: white;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+#gnb a{
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+#gnb ul{
+  display: inline-block;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+ 
+}
+#gnb ul:hover{
+  background-color: var(--color-normal-green);
+}
+#gnb li{
+  background-color: #e7e7e7;
+  box-shadow: 1px 1px 1px 1px #dddddd;
+}
+#gnb li:hover{
+  background-color: var(--color-normal-green);
+}
+#gnb .gnb__support li{
+  background-color: #e7e7e7;
+  box-shadow: 1px 1px 1px 1px #dddddd;
+  border-bottom: 0.5px ridge #dddddd;
+}
+#gnb .gnb__support li:hover{
+  background-color: var(--color-normal-green);
+}
+#gnb .gnb__supportLnb4{
+  background-color: #e7e7e7;
+  box-shadow: 1px 1px 1px 1px #dddddd;
+  border-bottom: none;
+}
+#gnb .gnb__infoLnb{
+}
+#gnb .gnb__cumLnb{
+}
+#gnb .gnb__supportLnb1{
+}
+#gnb .gnb__supportLnb4{
+}
+
+/* 푸터 up */
+#footerUp{
+  grid-area: fu;
+  display: flex;
+  justify-content: center;
+  column-gap: 10px;
+  width: 100%;
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+}
+
+/* 푸터 up 스타일 커스텀*/
+#footerUp{
+  background-color: var(--color-normal-green);
+  height: 20px;
+  line-height: 20px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+}
+#footerUp .footerUp__button1{
+  box-sizing: border-box;
+  border-left: 1px solid #4e4e4e;
+  border-right: 1px solid #4e4e4e;
+}
+#footerUp .footerUp__button2{
+  box-sizing: border-box;
+  border-left: 1px solid #4e4e4e;
+  border-right: 1px solid #4e4e4e;
+}
+#footerUp .footerUp__button3{
+  box-sizing: border-box;
+  border-left: 1px solid #4e4e4e;
+  border-right: 1px solid #4e4e4e;
+}
+#footerUp .footerUp__button4{
+  box-sizing: border-box;
+  border-left: 1px solid #4e4e4e;
+  border-right: 1px solid #4e4e4e;
+}
+
+/* 푸터 down */
+#footerDown{
+  grid-area: fd;
+  display: grid;
+  grid-template-areas: 
+  ". fd1 fd2 fd3 ."
+  ". fd1 fd4 . ."
+  ". fd1 fd5 fd6 ."
+  ". fd1 fd7 fd7 .";
+  grid-template-columns: 0.1fr auto repeat(2,190px) auto;
+  grid-template-rows: 4fr;
+  column-gap: 5px;
+  row-gap: 5px;
+  padding-top: 20px;
+}
+#footerDown .footerDown__text1{
+  grid-area: fd1;
+  justify-self: end;
+}
+#footerDown .footerDown__text2{
+  grid-area: fd2;
+  justify-self: start;
+}
+#footerDown .footerDown__text3{
+  grid-area: fd3;
+  justify-self: start;
+}
+#footerDown .footerDown__text4{
+  grid-area: fd4;
+  justify-self: start;
+}
+#footerDown .footerDown__text5{
+  grid-area: fd5;
+  justify-self: start;
+}
+#footerDown .footerDown__text6{
+  grid-area: fd6;
+  justify-self: start;
+}
+#footerDown .footerDown__text7{
+  grid-area: fd7;
+  justify-self: start;
+}

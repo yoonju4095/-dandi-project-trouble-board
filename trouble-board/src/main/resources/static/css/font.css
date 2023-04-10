@@ -1,0 +1,80 @@
+@charset "utf-8";
+@import 'https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap';
+
+:root {
+  --header-title-800: 800;
+  --header-title-size: 30pt;
+
+  --header-subTitle-700: 700;
+  --header-subTitle-size: 12pt;
+
+  --normal-title-700: 700;
+  --normal-title-size: 12pt;
+
+  --normal-text-400: 400;
+  --normal-text-400: 10pt;
+
+  /* font-size는 커스텀마이징 가능 */
+}
+
+body * {
+  font-family: 'Nanum Gothic', sans-serif;
+  font-weight: var(--normal-text-400);
+}
+a {
+  text-decoration: none;
+  color: black;
+}
+li {
+  list-style: none;
+}
+
+/* 헤더 폰트 */
+#header .header__title a {
+  font-weight: var(--header-title-800);
+}
+#header .header__title {
+  font-size: var(--header-title-size);
+  text-shadow: 1px 1px 1px #6e6e6e;
+}
+.header .header__subTitle a {
+  font-weight: var(--header-subTitle-700);
+}
+#header .header__subTitle {
+  font-size: 12pt;
+  font-weight: bold;
+  text-shadow: 1px 1px 1px #6e6e6e;
+}
+
+/* 지엔비 폰트 */
+#gnb .gnb__info > a {
+  font-size: 16pt;
+  font-weight: var(--normal-title-700);
+}
+#gnb ul {
+  font-size: 16pt;
+  font-weight: var(--normal-title-700);
+}
+#gnb li {
+  font-size: 13pt;
+}
+
+/* 푸터 up 폰트 */
+#footerUp {
+  font-size: 9pt;
+  font-weight: var(--normal-title-700);
+}
+
+/* 푸터 down 폰트 */
+#footerDown {
+  font-size: 10pt;
+}
+#footerDown .footerDown__text1 {
+  font-weight: var(--normal-title-700);
+  font-size: 11pt;
+}
+#footerDown .footerDown__text7 {
+  font-style: italic;
+  font-weight: var(--normal-title-700);
+  font-size: 8pt;
+}

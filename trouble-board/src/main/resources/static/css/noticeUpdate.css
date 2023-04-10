@@ -1,0 +1,86 @@
+.noticeUpdate {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  padding-top: 30px;
+}
+
+.noticeUpdate li {
+  padding: 5px;
+  border-bottom: 1px solid #dadada;
+}
+
+.noticeUpdate .div_1 {
+  background-color: #f8f8f8;
+  font-weight: bold;
+}
+
+.noticeUpdate .div_1 li {
+  display: flex;
+  align-items: center;
+  height: 3rem;
+  padding-left: 20px;
+  padding-right: 30px;
+  font-size: medium;
+}
+
+.noticeUpdate .div_1 li:nth-last-of-type(1) {
+  border-bottom: none;
+}
+
+.noticeUpdate .div_2 li {
+  display: flex;
+  align-items: center;
+  height: 3rem;
+  padding-left: 20px;
+  font-size: medium;
+}
+
+.noticeUpdate .div_2 li input {
+  height: 20px;
+}
+
+.noticeUpdate .div_2 li select {
+  height: 25px;
+}
+
+.noticeUpdate .div_1,
+.noticeUpdate .div_2 {
+  border-top: 1px solid #dadada;
+}
+
+/* 제목 */
+#title {
+  width: 800px;
+}
+
+/* 내용 */
+#content {
+  display: flex;
+  width: 1000px;
+  height: 100%;
+  padding: 20px;
+}
+#content textarea {
+  width: 1000px;
+}
+
+/* 파일선택 */
+#file {
+  height: 25px;
+}
+
+/* 수정, 삭제 버튼 */
+.div_3 {
+  display: flex;
+  justify-content: center;
+  padding: 30px;
+}
+
+.div_3 button {
+  font-size: medium;
+  font-weight: bold;
+  padding: 5px;
+  width: 55px;
+  cursor: pointer;
+}
