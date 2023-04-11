@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="서로에게 이득이 되는 아르바이트 구직정보 사이트 단디 알바">
   <meta name="keywords" content="dandi">
   <meta name="author" content="4팀">
-  <title>공지 목록</title>
+  <title>고민 목록</title>
   <link rel="stylesheet" href="/css/common.css">
-  <link rel="stylesheet" href="/css/noticeList.css">
+  <link rel="stylesheet" href="/css/troubleList.css">
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-  <!-- 카테고리 상자 숨기기 -->
-  <script src="https://kit.fontawesome.com/881b9bf5d3.js" crossorigin="anonymous"></script>
+</head>
+<!-- 카테고리 상자 숨기기 -->
+<script src="https://kit.fontawesome.com/881b9bf5d3.js" crossorigin="anonymous"></script>
 <body>
 <div id="wrapper">
   <!-- 헤더 -->
@@ -32,7 +33,7 @@
     </ul>
     <ul class="gnb__cum"><a href="#">커뮤니티</a>
       <div class="container2">
-        <li class="gnb__cumLnb"><a href="#" th:href="@{/trouble/add}">고민 게시판</a></li>
+        <li class="gnb__cumLnb"><a href="#">고충 게시판</a></li>
       </div>
     </ul>
     <ul class="gnb__member"><a href="#">개인 서비스</a>
@@ -55,7 +56,7 @@
     </ul>
     <ul class="gnb__support"><a href="#">고객지원</a>
       <div class="container5">
-        <li class="gnb__supportLnb1"><a href="#" th:href="@{/notice}">공지사항</a></li>
+        <li class="gnb__supportLnb1"><a href="#">공지사항</a></li>
         <li class="gnb__supportLnb2"><a href="#">아이디 찾기</a></li>
         <li class="gnb__supportLnb3"><a href="#">비밀번호 찾기</a></li>
         <li class="gnb__supportLnb4"><a href="#">회원탈퇴</a></li>
@@ -65,90 +66,94 @@
   <!-- 고민게시판 목록-->
   <div>
     <main>
-      <div class="div_1">
-        <div class="notice">
-          <h3>고민게시판</h3>
-        </div>
-        <div class="search">
-          <select class="" size="1">
-            <option>선택</option>
-            <option>제목</option>
-            <option>글쓴이</option>
-          </select>
-          <input type="text" placeholder="내용을 입력해주세요">
-          <button class="searchBtn">검색</button>
-        </div>
+      <div class="search">
+        <select class="" size="1">
+          <option>선택</option>
+          <option>제목</option>
+          <option>글쓴이</option>
+        </select>
+        <input type="text" placeholder="내용을 입력해주세요">
+        <button class="searchBtn">검색</button>
       </div>
-      <div class="noticeList">
+      <div class="troubleList">
         <table>
           <tr>
             <th>글번호</th>
-            <th>분류</th>
             <th>제목</th>
+            <th>글쓴이</th>
             <th>작성일자</th>
             <th>조회</th>
           </tr>
           <tr>
             <td>1</td>
-            <td>공지사항</td>
-            <td>공고등록 인증 진행 안내</td>
+            <td>집에 갈래</td>
+            <td>집에 갈래</td>
             <td>2023.03.22</td>
-            <td>52</td>
+            <td>5</td>
           </tr>
           <tr>
             <td>2</td>
-            <td>공지사항</td>
-            <td>개인회원 및 어쩌고</td>
-            <td>2023.03.25</td>
-            <td>82</td>
+            <td>집에 보내줘</td>
+            <td>집에 보내줘</td>
+            <td>2023.03.22</td>
+            <td>12</td>
           </tr>
           <tr>
-            <td>3</td>
             <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>4</td>
             <td></td>
             <td></td>
             <td></td>
             <td></td>
           </tr>
           <tr>
-            <td>5</td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
             <td></td>
           </tr>
           <tr>
-            <td>5</td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
             <td></td>
           </tr>
-          <td>5</td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
           </tr>
-          <td>5</td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
           </tr>
-          <td>5</td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
           </tr>
-
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
         </table>
       </div>
       <div class="add">
@@ -194,4 +199,5 @@
   <div class="sp10"></div>
 </div>
 </body>
+
 </html>

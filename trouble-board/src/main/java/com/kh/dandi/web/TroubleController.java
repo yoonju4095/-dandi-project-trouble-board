@@ -51,12 +51,14 @@ public class TroubleController {
     // 등록
     Trouble trouble = new Trouble();
     trouble.setTId(saveForm.getTId());
+    trouble.setNickname(saveForm.getNickname());
+    trouble.setEmail(saveForm.getEmail());
 //    trouble.setTCategory(saveForm.getTCategory());
+//    trouble.setWage(saveForm.getWage());
+//    trouble.setHours(saveForm.getHours());
     trouble.setTitle(saveForm.getTitle());
-//    trouble.setEmail(saveForm.getEmail());
-//    trouble.setNickname(saveForm.getNickname());
-//    trouble.setHit(saveForm.getHit());
     trouble.setTContent(saveForm.getTContent());
+//    trouble.setHit(saveForm.getHit());
 
     Long saveId = troubleSVC.save(trouble);
     redirectAttributes.addAttribute("tId", saveId);
@@ -75,38 +77,42 @@ public class TroubleController {
 
     DetailForm detailForm = new DetailForm();
     detailForm.setTId(trouble.getTId());
+    detailForm.setNickname(trouble.getNickname());
+    detailForm.setEmail(trouble.getEmail());
 //    detailForm.setTCategory(trouble.getTCategory());
+    detailForm.setWage(trouble.getWage());
+    detailForm.setHours(trouble.getHours());
     detailForm.setTitle(trouble.getTitle());
-//    detailForm.setEmail(trouble.getEmail());
-//    detailForm.setNickname(trouble.getNickname());
-//    detailForm.setHit(trouble.getHit());
     detailForm.setTContent(trouble.getTContent());
+//    detailForm.setHit(trouble.getHit());
 
     model.addAttribute("detailForm", detailForm);
     return "trouble/detailForm";
   }
 
 //   수정양식
-  @GetMapping("/{id}/edit")
+  @GetMapping("/{tId}/edit")
   public String updateForm(
-          @PathVariable("id") Long id,
+          @PathVariable("tId") Long tId,
           Model model
   ){
-    Optional<Trouble> findedTrouble = troubleSVC.findById(id);
-    Trouble notice = findedTrouble.orElseThrow();
+    Optional<Trouble> findedTrouble = troubleSVC.findById(tId);
+    Trouble trouble = findedTrouble.orElseThrow();
 
     UpdateForm updateForm = new UpdateForm();
-    updateForm.setTitle(notice.getTitle());
-//    updateForm.setContent(notice.getContent());
+    updateForm.setNickname(trouble.getNickname());
+    updateForm.setEmail(trouble.getEmail());
+    updateForm.setTitle(trouble.getTitle());
+    updateForm.setTContent(trouble.getTContent());
 
     model.addAttribute("updateForm", updateForm);
     return "trouble/updateForm";
   }
 
   // 수정
-  @PostMapping("/{id}/edit")
+  @PostMapping("/{tId}/edit")
   public String update(
-          @PathVariable("id") Long id,
+          @PathVariable("tId") Long tId,
           @Valid @ModelAttribute UpdateForm updateForm,
           BindingResult bindingResult,
           RedirectAttributes redirectAttributes
@@ -119,14 +125,16 @@ public class TroubleController {
 
     // 정상처리
     Trouble trouble = new Trouble();
-//    notice.setId(id);
+    trouble.setTId(tId);
+    trouble.setNickname(updateForm.getNickname());
+    trouble.setEmail(updateForm.getEmail());
     trouble.setTitle(updateForm.getTitle());
-//    notice.setContent(updateForm.getContent());
+    trouble.setTContent(updateForm.getTContent());
 
-    troubleSVC.update(id, trouble);
+    troubleSVC.update(tId, trouble);
 
-    redirectAttributes.addAttribute("id", id);
-    return "redirect:/trouble/{id}/detail";
+    redirectAttributes.addAttribute("tId", tId);
+    return "redirect:/trouble/{tId}/detail";
   }
 
   // 삭제

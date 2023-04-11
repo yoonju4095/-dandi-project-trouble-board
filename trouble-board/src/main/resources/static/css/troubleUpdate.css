@@ -1,21 +1,21 @@
-.noticeUpdate {
+.troubleUpdate {
   display: flex;
   justify-content: center;
   align-content: center;
   padding-top: 30px;
 }
 
-.noticeUpdate li {
+.troubleUpdate li {
   padding: 5px;
   border-bottom: 1px solid #dadada;
 }
 
-.noticeUpdate .div_1 {
+.troubleUpdate .div_1 {
   background-color: #f8f8f8;
   font-weight: bold;
 }
 
-.noticeUpdate .div_1 li {
+.troubleUpdate .div_1 li {
   display: flex;
   align-items: center;
   height: 3rem;
@@ -24,11 +24,11 @@
   font-size: medium;
 }
 
-.noticeUpdate .div_1 li:nth-last-of-type(1) {
+.troubleUpdate .div_1 li:nth-last-of-type(1) {
   border-bottom: none;
 }
 
-.noticeUpdate .div_2 li {
+.troubleUpdate .div_2 li {
   display: flex;
   align-items: center;
   height: 3rem;
@@ -36,16 +36,16 @@
   font-size: medium;
 }
 
-.noticeUpdate .div_2 li input {
+.troubleUpdate .div_2 li input {
   height: 20px;
 }
 
-.noticeUpdate .div_2 li select {
+.troubleUpdate .div_2 li select {
   height: 25px;
 }
 
-.noticeUpdate .div_1,
-.noticeUpdate .div_2 {
+.troubleUpdate .div_1,
+.troubleUpdate .div_2 {
   border-top: 1px solid #dadada;
 }
 
@@ -70,7 +70,7 @@
   height: 25px;
 }
 
-/* 수정, 삭제 버튼 */
+/* 등록, 취소 버튼 */
 .div_3 {
   display: flex;
   justify-content: center;

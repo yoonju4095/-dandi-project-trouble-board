@@ -35,10 +35,13 @@ public class TroubleDAOImpl implements TroubleDAO {
   public Long save(Trouble trouble) {
 
     StringBuffer sb = new StringBuffer();
-    sb.append("insert into trouble_board(t_id, t_category, title, email, nickname, hit," +
-            " t_content, ptrouble_id, bgroup, step, bindent, status) ");
-    sb.append("values(trouble_board_t_id_seq.nextval, :tCategory, :title, :email, :nickname, " +
-            ":hit, :tContent, :ptroubleId, :bGroup, :step, :bindent, :status) ");
+//    sb.append("insert into trouble_board(t_id, nickname, email, t_category, contract, wage, hours, title, t_content, hit," +
+//            " ptrouble_id, bgroup, step, bindent, status) ");
+//    sb.append("values(trouble_board_t_id_seq.nextval, :tCategory, :title, :email, :nickname, " +
+//            ":hit, :tContent, :ptroubleId, :bGroup, :step, :bindent, :status) ");
+
+    sb.append("insert into trouble_board(t_id, nickname, email, title, t_content) ");
+    sb.append("values(trouble_board_t_id_seq.nextval, :nickname, :email, :title, :tContent) ");
 
     SqlParameterSource param = new BeanPropertySqlParameterSource(trouble);
     KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -57,7 +60,8 @@ public class TroubleDAOImpl implements TroubleDAO {
   @Override
   public Optional<Trouble> findById(Long tId) {
     StringBuffer sb = new StringBuffer();
-    sb.append("select t_id, t_category, title, email, nickname, hit, t_content ");
+//    sb.append("select t_id, nickname, email, t_category, contract, wage, hours, title, t_content, hit ");
+    sb.append("select t_id, nickname, email, title, t_content");
     sb.append("  from trouble_board ");
     sb.append(" where t_id = :t_id ");
 
@@ -82,34 +86,34 @@ public class TroubleDAOImpl implements TroubleDAO {
   public int update(Long tId, Trouble trouble) {
     StringBuffer sb = new StringBuffer();
     sb.append("update trouble_board ");
-    sb.append("   set t_category = :tCategory, ");
-    sb.append("       title = :title ");
+    sb.append("   set nickname = :nickname, ");
     sb.append("       email = :email, ");
-    sb.append("       nickname = :nickname, ");
-    sb.append("       hit = :hit");
-    sb.append("       t_content = :tContent");
-    sb.append("       ptrouble_id = :ptroubleId");
-    sb.append("       bgroup = :bGroup");
-    sb.append("       step = :step");
-    sb.append("       bindent = :bindent");
-    sb.append("       status = :status");
-    sb.append("       cdate = :cdate");
-    sb.append("       udate = :udate");
-    sb.append(" where t_id = :tId ");
+//    sb.append("       t_category = :tCategory ");
+    sb.append("       title = :title, ");
+    sb.append("       t_content = :tContent ");
+//    sb.append("       hit = :hit");
+//    sb.append("       ptrouble_id = :ptroubleId");
+//    sb.append("       bgroup = :bGroup");
+//    sb.append("       step = :step");
+//    sb.append("       bindent = :bindent");
+//    sb.append("       status = :status");
+//    sb.append("       cdate = :cdate");
+//    sb.append("       udate = :udate");
+    sb.append(" where t_id = :t_id ");
 
     SqlParameterSource param = new MapSqlParameterSource()
-            .addValue("tCategory", trouble.getTCategory())
-            .addValue("title", trouble.getTitle())
-            .addValue("email",trouble.getEmail())
             .addValue("nickname", trouble.getNickname())
-            .addValue("hit", trouble.getHit())
-            .addValue("tContent", trouble.getTContent())
-            .addValue("ptroubleId", trouble.getPtroubleId())
-            .addValue("bGroup", trouble.getBGroup())
-            .addValue("step", trouble.getStep())
-            .addValue("status", trouble.getStatus())
-            .addValue("cdate", trouble.getCDate())
-            .addValue("udate", trouble.getUDate());
+            .addValue("email",trouble.getEmail())
+//            .addValue("t_category", trouble.getTCategory())
+            .addValue("title", trouble.getTitle())
+            .addValue("tContent", trouble.getTContent());
+//            .addValue("hit", trouble.getHit())
+//            .addValue("ptroubleId", trouble.getPtroubleId())
+//            .addValue("bGroup", trouble.getBGroup())
+//            .addValue("step", trouble.getStep())
+//            .addValue("status", trouble.getStatus())
+//            .addValue("cdate", trouble.getCDate())
+//            .addValue("udate", trouble.getUDate());
 
     return template.update(sb.toString(),param);
   }
@@ -120,8 +124,8 @@ public class TroubleDAOImpl implements TroubleDAO {
    */
   @Override
   public int delete(Long tId) {
-    String sql = "delete from trouble_board where t_id = :tId ";
-    return template.update(sql,Map.of("t_id",tId));
+    String sql = "delete from trouble_board where t_id = :t_id ";
+    return template.update(sql,Map.of("t_id", tId));
   }
 
   /**
@@ -131,7 +135,7 @@ public class TroubleDAOImpl implements TroubleDAO {
   public List<Trouble> findAll() {
 
     StringBuffer sb = new StringBuffer();
-    sb.append("select t_id, t_category, title, email, nickname, hit ");
+    sb.append("select t_id, nickname, email, title, t_content");
     sb.append("  from trouble_board ");
 
     List<Trouble> list = template.query(

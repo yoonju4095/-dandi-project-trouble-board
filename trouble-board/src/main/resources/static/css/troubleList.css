@@ -5,11 +5,11 @@
   padding: 50px 50px 10px 50px;
 }
 
-#frm{
-      display: flex;
-      justify-content: center;
-      align-content: center;
-      padding: 5px 50px 0px 50px;
+#frm {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  padding: 5px 50px 0px 50px;
 }
 
 .notice {
@@ -25,17 +25,16 @@
   font-weight: bold;
 }
 
-.search input,
-.search select,
-.search .searchBtn {
-  margin: 3px;
-  padding: auto;
-}
+/* .search input {
+  border-color: lightgray;
+} */
 
 .search .searchBtn {
   width: 55px;
   padding: 5px;
   cursor: pointer;
+  border: none;
+  /* background-color: #a9e7c3; */
 }
 
 .noticeList {

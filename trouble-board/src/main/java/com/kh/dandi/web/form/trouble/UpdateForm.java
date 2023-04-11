@@ -5,13 +5,17 @@ import lombok.Data;
 @Data
 public class UpdateForm {
   private Long tId;
-  private String tCategory;
-  private String title;
-  private String email;
   private String nickname;
-  private Long hit;
+  private String email;
+  private String tCategory; // 고민유형
+  private String contract;  // 근로계약서
+  private String wage;      // 계약임금
+  private String hours;     // 근무시간
+  private String title;
   private String tContent;
-//  private Long pTroubleId;
+  private Long hit;
+
+//  private Long ptroubleId;
 //  private Long bGroup;
 //  private Long step;
 //  private Long bindent;

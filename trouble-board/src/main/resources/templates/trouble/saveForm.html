@@ -72,12 +72,11 @@
         <div class="div_1">
           <ul>
             <li><label class="title" for="name">이름</label></li>
-            <li><label class="title" for="pwd">비밀번호</label></li>
             <li><label class="title" for="email">이메일</label></li>
-            <li><label class="title" for="troubleType">고민유형</label></li>
-            <li><label class="title" for="employmentContract">근로계약서</label></li>
-            <li><label class="title" for="contractWages">계약임금</label></li>
-            <li><label class="title" for="workingHours">근무시간</label></li>
+            <li><label class="title" for="category">고민유형</label></li>
+            <li><label class="title" for="contract">근로계약서</label></li>
+            <li><label class="title" for="wage">계약임금</label></li>
+            <li><label class="title" for="hours">근무시간</label></li>
             <li><label class="title" for="title">제목</label></li>
             <li><label class="title" for="content">내용</label></li>
           </ul>
@@ -85,9 +84,8 @@
 
         <div class="div_2">
           <ul>
-            <li><input type="text" id="name" maxlength="10"></li>
-            <li><input type="password" id="pwd"></li>
-            <li><input type="text" id="email"></li>
+            <li><input type="text" id="name" th:field="*{nickname}" maxlength="10"></li>
+            <li><input type="text" id="email" th:field="*{email}" ></li>
             <li>
               <select size="1" id="category" onchange="selectBoxChange(this.value)">
                 <option>선택</option>
@@ -100,9 +98,9 @@
               </select>
             </li>
             <li id="contract">
-              <input type="radio" id="written">
+              <input type="radio" name="contract" id="written" value="written" checked>
               <label for="written">작성함</label>
-              <input type="radio" id="notWritten" style="vertical-align: -5px;">
+              <input type="radio" name="contract" id="notWritten" value="notWritten">
               <label for="notWritten">작성안함</label>
             </li>
             <li>
@@ -115,7 +113,7 @@
                 <option>연봉</option>
                 <option>건별</option>
               </select>
-<!--              <input type="text"><label for="">원</label>-->
+              <input type="text">원
             </li>
             <li>
               <select size="1" id="hour">
@@ -166,7 +164,7 @@
         <ul>
           <li>
             <button type="submit" id="btnAdd">등록</button>
-            <button id="btnCancel" th:onclick="|location.href='@{/}'|">취소</button>
+            <button id="btnCancel">취소</button>
           </li>
         </ul>
       </div>
@@ -212,10 +210,10 @@
   <div class="sp10"></div>
 </div>
 <script>
-  var selectBoxChange = function(value){
-    console.log('값 변경 테스트:' + value);
-    $("#changeInput").val(value);
-  }
+<!--  var selectBoxChange = function(value){-->
+<!--    console.log('값 변경 테스트:' + value);-->
+<!--    $("#changeInput").val(value);-->
+<!--  }-->
 </script>
 </body>
 </html>

@@ -10,7 +10,7 @@
   <meta name="author" content="4팀">
   <title>공지 수정</title>
   <link rel="stylesheet" href="/css/common.css">
-  <link rel="stylesheet" href="/css/noticeUpdate.css">
+  <link rel="stylesheet" href="/css/troubleAdd.css">
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 </head>
@@ -68,38 +68,110 @@
     <div>
       <main>
         <form action="" method="post" th:object="${updateForm}">
-        <div class="noticeUpdate">
-          <div class="div_1"> 
-            <ul>
-              <li><label class="title" for="title">제목</label></li>
-              <li><label class="title" for="content">내용</label></li>
-            </ul>
+          <div class="troubleAdd">
+            <div class="div_1">
+              <ul>
+                <li><label class="title" for="name">이름</label></li>
+                <li><label class="title" for="email">이메일</label></li>
+                <li><label class="title" for="category">고민유형</label></li>
+                <li><label class="title" for="contract">근로계약서</label></li>
+                <li><label class="title" for="wage">계약임금</label></li>
+                <li><label class="title" for="hours">근무시간</label></li>
+                <li><label class="title" for="title">제목</label></li>
+                <li><label class="title" for="content">내용</label></li>
+              </ul>
+            </div>
+
+
+
+            <div class="div_2">
+              <ul>
+                <input type="text" id="id" th:field="*{tId}">
+                <li><input type="text" id="name"  th:field="*{nickname}" maxlength="10"></li>
+                <li><input type="text" id="email"  th:field="*{email}" ></li>
+                <li>
+                  <select size="1" id="category" onchange="selectBoxChange(this.value)">
+                    <option>선택</option>
+                    <option>임금</option>
+                    <option>근무시간</option>
+                    <option>해고</option>
+                    <option>산재</option>
+                    <option>폭행/성희롱</option>
+                    <option>기타</option>
+                  </select>
+                </li>
+                <li id="contract">
+                  <input type="radio" name="contract" id="written" value="written" checked>
+                  <label for="written">작성함</label>
+                  <input type="radio" name="contract" id="notWritten" value="notWritten">
+                  <label for="notWritten">작성안함</label>
+                </li>
+                <li>
+                  <select size="1">
+                    <option>선택</option>
+                    <option>시급</option>
+                    <option>일급</option>
+                    <option>주급</option>
+                    <option>월급</option>
+                    <option>연봉</option>
+                    <option>건별</option>
+                  </select>
+                  <input type="text">원
+                </li>
+                <li>
+                  <select size="1" id="hour">
+                    <option>선택</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                    <option>7</option>
+                    <option>8</option>
+                    <option>9</option>
+                    <option>10</option>
+                    <option>11</option>
+                    <option>12</option>
+                    <option>13</option>
+                    <option>14</option>
+                    <option>15</option>
+                    <option>16</option>
+                    <option>17</option>
+                    <option>18</option>
+                    <option>19</option>
+                    <option>20</option>
+                    <option>21</option>
+                    <option>22</option>
+                    <option>23</option>
+                    <option>24</option>
+                  </select>
+                  <label for="hour">시간</label>
+                  <input type="text" id="month"><label for="month">개월</label>
+                  <input type="text" id="year"><label for="year">년</label>
+                </li>
+                <li>
+                  <input type="text" id="title" th:field="*{title}" placeholder="제목을 입력해주세요" maxlength="20">
+                </li>
+                <li id="content">
+                  <textarea name="" th:field="*{tContent}" placeholder="내용을 입력해주세요" rows="30"></textarea>
+                </li>
+                <li>
+                  <input type="file" id="file" multiple>
+                </li>
+              </ul>
+            </div>
           </div>
 
-          <div class="div_2">
+          <div class="div_3">
             <ul>
               <li>
-                <input type="text" id="title" th:field="*{title}" placeholder="제목을 입력해주세요" maxlength="20">
-              </li>
-              <li id="content">
-                <textarea name="" th:field="*{content}" placeholder="내용을 입력해주세요" rows="30"></textarea>
-              </li>
-              <li>
-                <input type="file" id="file" multiple>
+                <button type="button" id="btnSave">저장</button>
+                <button type="button" id="btnDelete" >삭제</button>
+                <button type="button" id="btnFindAll" th:onclick="|location.href='@{/trouble}'|">취소</button>
               </li>
             </ul>
           </div>
-        </div>
-
-        <div class="div_3">
-          <ul>
-            <li>
-              <button id="btnSave">저장</button>
-              <button type="button" id="btnDelete" >삭제</button>
-              <button id="btnCancel">취소</button>
-            </li>
-          </ul>
-        </div>
 
         </form>
       </main>
@@ -142,11 +214,13 @@
     <div class="sp10"></div>
   </div>
   <script>
+    const $id = document.getElementById('id');
+
   const $btnDelete = document.getElementById('btnDelete');
 
   const btnDelete_h = e=>{
     if(confirm('삭제 하시겠습니까?')){
-<!--      globalThis.location.href = `/products/${$productId.value}/del`;-->
+      globalThis.location.href = `/trouble/${$id.value}/del`;
   return false;
     }
   }
