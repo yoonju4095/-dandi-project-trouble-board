@@ -39,6 +39,7 @@ public class TroubleDAOImplTest {
     Trouble trouble = new Trouble();
     trouble.setTitle("제목22");
     trouble.setTContent("내용22");
+    trouble.setTCategory("dd");
     int updatedRowCount = troubleDAO.update(tId, trouble);
     Optional<Trouble> findedTrouble = troubleDAO.findById(tId);
 

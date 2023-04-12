@@ -8,7 +8,7 @@
   <meta name="description" content="서로에게 이득이 되는 아르바이트 구직정보 사이트 단디 알바">
   <meta name="keywords" content="dandi">
   <meta name="author" content="4팀">
-  <title>공지 수정</title>
+  <title>고민 수정</title>
   <link rel="stylesheet" href="/css/common.css">
   <link rel="stylesheet" href="/css/troubleAdd.css">
   <link rel="stylesheet"
@@ -83,72 +83,72 @@
             </div>
 
 
-
             <div class="div_2">
               <ul>
-                <input type="text" id="id" th:field="*{tId}">
+                <input id="id" readonly th:field="*{tId}">
                 <li><input type="text" id="name"  th:field="*{nickname}" maxlength="10"></li>
                 <li><input type="text" id="email"  th:field="*{email}" ></li>
                 <li>
-                  <select size="1" id="category" onchange="selectBoxChange(this.value)">
-                    <option>선택</option>
-                    <option>임금</option>
-                    <option>근무시간</option>
-                    <option>해고</option>
-                    <option>산재</option>
-                    <option>폭행/성희롱</option>
-                    <option>기타</option>
+                  <select size="1" id="category" th:field="*{tCategory}">
+                    <option value="">선택</option>
+                    <option value="임금">임금</option>
+                    <option value="근무시간">근무시간</option>
+                    <option value="해고">해고</option>
+                    <option value="산재">산재</option>
+                    <option value="폭행">폭행</option>
+                    <option value="성희롱">성희롱</option>
+                    <option value="기타">기타</option>
                   </select>
                 </li>
                 <li id="contract">
-                  <input type="radio" name="contract" id="written" value="written" checked>
+                  <input type="radio" name="contract" id="written" value="작성함" th:field="*{contract}" checked>
                   <label for="written">작성함</label>
-                  <input type="radio" name="contract" id="notWritten" value="notWritten">
+                  <input type="radio" name="contract" id="notWritten" value="작성안함" th:field="*{contract}">
                   <label for="notWritten">작성안함</label>
                 </li>
                 <li>
-                  <select size="1">
-                    <option>선택</option>
-                    <option>시급</option>
-                    <option>일급</option>
-                    <option>주급</option>
-                    <option>월급</option>
-                    <option>연봉</option>
-                    <option>건별</option>
+                  <select size="1" th:field="*{wage}">
+                    <option value="">선택</option>
+                    <option value="시급">시급</option>
+                    <option value="일급">일급</option>
+                    <option value="주급">주급</option>
+                    <option value="월급">월급</option>
+                    <option value="연봉">연봉</option>
+                    <option value="건별">건별</option>
                   </select>
-                  <input type="text">원
+                  <input type="text" th:field="*{won}">원
                 </li>
                 <li>
-                  <select size="1" id="hour">
-                    <option>선택</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                    <option>6</option>
-                    <option>7</option>
-                    <option>8</option>
-                    <option>9</option>
-                    <option>10</option>
-                    <option>11</option>
-                    <option>12</option>
-                    <option>13</option>
-                    <option>14</option>
-                    <option>15</option>
-                    <option>16</option>
-                    <option>17</option>
-                    <option>18</option>
-                    <option>19</option>
-                    <option>20</option>
-                    <option>21</option>
-                    <option>22</option>
-                    <option>23</option>
-                    <option>24</option>
+                  <select size="1" id="hour" th:field="*{hours}">
+                    <option value="">선택</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                    <option value="17">17</option>
+                    <option value="18">18</option>
+                    <option value="19">19</option>
+                    <option value="20">20</option>
+                    <option value="21">21</option>
+                    <option value="22">22</option>
+                    <option value="23">23</option>
+                    <option value="24">24</option>
                   </select>
                   <label for="hour">시간</label>
-                  <input type="text" id="month"><label for="month">개월</label>
-                  <input type="text" id="year"><label for="year">년</label>
+                  <input type="text" id="month" th:field="*{month}"><label for="month">개월</label>
+                  <input type="text" id="year" th:field="*{year}"><label for="year">년</label>
                 </li>
                 <li>
                   <input type="text" id="title" th:field="*{title}" placeholder="제목을 입력해주세요" maxlength="20">
@@ -166,7 +166,7 @@
           <div class="div_3">
             <ul>
               <li>
-                <button type="button" id="btnSave">저장</button>
+                <button type="submit" id="btnSave">저장</button>
                 <button type="button" id="btnDelete" >삭제</button>
                 <button type="button" id="btnFindAll" th:onclick="|location.href='@{/trouble}'|">취소</button>
               </li>

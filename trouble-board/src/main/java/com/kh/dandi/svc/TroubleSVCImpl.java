@@ -21,7 +21,9 @@ public class TroubleSVCImpl implements TroubleSVC {
 
   @Override
   public Optional<Trouble> findById(Long tId) {
-    return troubleDAO.findById(tId);
+    Optional<Trouble> trouble = troubleDAO.findById(tId);
+    troubleDAO.updateHit(tId);
+    return trouble;
   }
 
   @Override
@@ -38,4 +40,7 @@ public class TroubleSVCImpl implements TroubleSVC {
   public List<Trouble> findAll() {
     return troubleDAO.findAll();
   }
+
+  @Override
+  public int increaseHit(Long tId) { return troubleDAO.updateHit(tId); }
 }

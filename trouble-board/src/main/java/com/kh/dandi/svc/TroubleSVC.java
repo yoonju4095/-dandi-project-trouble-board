@@ -21,4 +21,8 @@ public interface TroubleSVC {
 
   // 목록
   List<Trouble> findAll();
+
+  //조회수증가
+  int increaseHit(Long tId);
+
 }

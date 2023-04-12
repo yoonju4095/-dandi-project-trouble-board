@@ -50,15 +50,18 @@ public class TroubleController {
 
     // 등록
     Trouble trouble = new Trouble();
-    trouble.setTId(saveForm.getTId());
+//    trouble.setTId(saveForm.getTId());
     trouble.setNickname(saveForm.getNickname());
     trouble.setEmail(saveForm.getEmail());
-//    trouble.setTCategory(saveForm.getTCategory());
-//    trouble.setWage(saveForm.getWage());
-//    trouble.setHours(saveForm.getHours());
+    trouble.setTCategory(saveForm.getTCategory());
+    trouble.setContract(saveForm.getContract());
+    trouble.setWage(saveForm.getWage());
+    trouble.setWon(saveForm.getWon());
+    trouble.setHours(saveForm.getHours());
+    trouble.setMonth(saveForm.getMonth());
+    trouble.setYear(saveForm.getYear());
     trouble.setTitle(saveForm.getTitle());
     trouble.setTContent(saveForm.getTContent());
-//    trouble.setHit(saveForm.getHit());
 
     Long saveId = troubleSVC.save(trouble);
     redirectAttributes.addAttribute("tId", saveId);
@@ -79,12 +82,17 @@ public class TroubleController {
     detailForm.setTId(trouble.getTId());
     detailForm.setNickname(trouble.getNickname());
     detailForm.setEmail(trouble.getEmail());
-//    detailForm.setTCategory(trouble.getTCategory());
+    detailForm.setTCategory(trouble.getTCategory());
+    detailForm.setContract(trouble.getContract());
     detailForm.setWage(trouble.getWage());
+    detailForm.setWon(trouble.getWon());
     detailForm.setHours(trouble.getHours());
+    detailForm.setMonth(trouble.getMonth());
+    detailForm.setYear(trouble.getYear());
     detailForm.setTitle(trouble.getTitle());
     detailForm.setTContent(trouble.getTContent());
-//    detailForm.setHit(trouble.getHit());
+    detailForm.setHit(trouble.getHit());
+    detailForm.setCDate(trouble.getCDate());
 
     model.addAttribute("detailForm", detailForm);
     return "trouble/detailForm";
@@ -102,6 +110,10 @@ public class TroubleController {
     UpdateForm updateForm = new UpdateForm();
     updateForm.setNickname(trouble.getNickname());
     updateForm.setEmail(trouble.getEmail());
+    updateForm.setTCategory(trouble.getTCategory());
+    updateForm.setContract(trouble.getContract());
+    updateForm.setWage(trouble.getWage());
+    updateForm.setHours(trouble.getHours());
     updateForm.setTitle(trouble.getTitle());
     updateForm.setTContent(trouble.getTContent());
 
@@ -128,6 +140,10 @@ public class TroubleController {
     trouble.setTId(tId);
     trouble.setNickname(updateForm.getNickname());
     trouble.setEmail(updateForm.getEmail());
+    trouble.setTCategory(updateForm.getTCategory());
+    trouble.setContract(updateForm.getContract());
+    trouble.setWage(updateForm.getWage());
+    trouble.setHours(updateForm.getHours());
     trouble.setTitle(updateForm.getTitle());
     trouble.setTContent(updateForm.getTContent());
 

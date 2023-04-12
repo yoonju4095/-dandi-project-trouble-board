@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -14,6 +13,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -35,20 +35,14 @@ public class TroubleDAOImpl implements TroubleDAO {
   public Long save(Trouble trouble) {
 
     StringBuffer sb = new StringBuffer();
-//    sb.append("insert into trouble_board(t_id, nickname, email, t_category, contract, wage, hours, title, t_content, hit," +
-//            " ptrouble_id, bgroup, step, bindent, status) ");
-//    sb.append("values(trouble_board_t_id_seq.nextval, :tCategory, :title, :email, :nickname, " +
-//            ":hit, :tContent, :ptroubleId, :bGroup, :step, :bindent, :status) ");
-
-    sb.append("insert into trouble_board(t_id, nickname, email, title, t_content) ");
-    sb.append("values(trouble_board_t_id_seq.nextval, :nickname, :email, :title, :tContent) ");
+    sb.append("insert into trouble_board(t_id, nickname, email, t_category, contract, wage, won, hours, month, year, title, t_content) ");
+    sb.append("values(trouble_board_t_id_seq.nextval, :nickname, :email, :tCategory, :contract, :wage, :won, :hours, :month, :year, :title, :tContent) ");
 
     SqlParameterSource param = new BeanPropertySqlParameterSource(trouble);
     KeyHolder keyHolder = new GeneratedKeyHolder();
     template.update(sb.toString(),param,keyHolder,new String[]{"t_id"});
 
     long tId = keyHolder.getKey().longValue(); // 게시글 번호
-//    notice.setId(id);
 
     return tId;
   }
@@ -60,8 +54,7 @@ public class TroubleDAOImpl implements TroubleDAO {
   @Override
   public Optional<Trouble> findById(Long tId) {
     StringBuffer sb = new StringBuffer();
-//    sb.append("select t_id, nickname, email, t_category, contract, wage, hours, title, t_content, hit ");
-    sb.append("select t_id, nickname, email, title, t_content");
+    sb.append("select t_id, nickname, email, t_category, contract, wage, won, hours, month, year, title, t_content, cdate");
     sb.append("  from trouble_board ");
     sb.append(" where t_id = :t_id ");
 
@@ -88,7 +81,10 @@ public class TroubleDAOImpl implements TroubleDAO {
     sb.append("update trouble_board ");
     sb.append("   set nickname = :nickname, ");
     sb.append("       email = :email, ");
-//    sb.append("       t_category = :tCategory ");
+    sb.append("       t_category = :tCategory, ");
+//    sb.append("       contract = :contract, ");
+    sb.append("       wage = :wage, ");
+    sb.append("       hours = :hours, ");
     sb.append("       title = :title, ");
     sb.append("       t_content = :tContent ");
 //    sb.append("       hit = :hit");
@@ -99,14 +95,18 @@ public class TroubleDAOImpl implements TroubleDAO {
 //    sb.append("       status = :status");
 //    sb.append("       cdate = :cdate");
 //    sb.append("       udate = :udate");
-    sb.append(" where t_id = :t_id ");
+    sb.append(" where t_id = :tId ");
 
     SqlParameterSource param = new MapSqlParameterSource()
             .addValue("nickname", trouble.getNickname())
             .addValue("email",trouble.getEmail())
-//            .addValue("t_category", trouble.getTCategory())
+            .addValue("tCategory", trouble.getTCategory())
+            .addValue("contract", trouble.getContract())
+            .addValue("wage", trouble.getWage())
+            .addValue("hours", trouble.getHours())
             .addValue("title", trouble.getTitle())
-            .addValue("tContent", trouble.getTContent());
+            .addValue("tContent", trouble.getTContent())
+            .addValue("tId", tId);
 //            .addValue("hit", trouble.getHit())
 //            .addValue("ptroubleId", trouble.getPtroubleId())
 //            .addValue("bGroup", trouble.getBGroup())
@@ -129,13 +129,13 @@ public class TroubleDAOImpl implements TroubleDAO {
   }
 
   /**
-   * @return 공지목록
+   * @return 고민목록
    */
   @Override
   public List<Trouble> findAll() {
 
     StringBuffer sb = new StringBuffer();
-    sb.append("select t_id, nickname, email, title, t_content");
+    sb.append("select t_id, nickname, title, hit, cdate ");
     sb.append("  from trouble_board ");
 
     List<Trouble> list = template.query(
@@ -146,18 +146,49 @@ public class TroubleDAOImpl implements TroubleDAO {
     return list;
   }
 
+  /**
+   * @return 조회수
+   */
+  @Override
+  public int updateHit(Long tId) {
+    String sql = "update trouble_board set hit = NVL(hit, 0) + 1 where t_id = :tId ";
+    MapSqlParameterSource params = new MapSqlParameterSource();
+    params.addValue("tId", tId);
+
+    // id에 해당하는 레코드가 notice 테이블에 존재하는지 확인
+    String checkSql = "select count(*) from trouble_board where t_id = :tId ";
+    int count = template.queryForObject(checkSql, params, Integer.class);
+    if (count == 0) {
+      throw new IllegalArgumentException("tId not found in trouble_board table");
+    }
+
+    int affectedRows = template.update(sql, params);
+    return affectedRows;
+  }
+
+  /**
+   * @return 고민 건수
+   */
+  @Override
+  public int countOfRecord() {
+    String sql = "select count(*) from trouble_board ";
+    Map<String,String> param = new LinkedHashMap<>();
+    Integer rows = template.queryForObject(sql, param, Integer.class);
+    return rows;
+  }
+
   //수동 매핑
-  private RowMapper<Trouble> noticeRowMapper() {
-    return (rs, rowNum) -> {
-      Trouble notice = new Trouble();
+//  private RowMapper<Trouble> noticeRowMapper() {
+//    return (rs, rowNum) -> {
+//      Trouble notice = new Trouble();
 //      notice.setId(rs.getLong("id"));
-      notice.setTitle(rs.getString("title"));
+//      notice.setTitle(rs.getString("title"));
 //      notice.setContent(rs.getString("content"));
 //      notice.setAuthor(rs.getString("author"));
-      notice.setHit(rs.getLong("hit"));
+//      notice.setHit(rs.getLong("hit"));
 //      notice.setCDate(rs.getLong("cdate"));
 //      notice.setUDate(rs.getLong("udate"));
-      return notice;
-    };
-  }
+//      return notice;
+//    };
+//  }
 }

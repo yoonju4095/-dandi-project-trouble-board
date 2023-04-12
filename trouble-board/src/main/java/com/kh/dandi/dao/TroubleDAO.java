@@ -20,4 +20,9 @@ public interface TroubleDAO {
   // 고민 목록
   List<Trouble> findAll();
 
+  // 조회수 증가
+  int updateHit(Long tId);
+
+  // 등록된 고민 건수
+  int countOfRecord();
 }
