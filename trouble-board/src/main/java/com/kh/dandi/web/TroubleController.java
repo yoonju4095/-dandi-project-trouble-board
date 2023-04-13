@@ -113,7 +113,10 @@ public class TroubleController {
     updateForm.setTCategory(trouble.getTCategory());
     updateForm.setContract(trouble.getContract());
     updateForm.setWage(trouble.getWage());
+    updateForm.setWon(trouble.getWon());
     updateForm.setHours(trouble.getHours());
+    updateForm.setMonth(trouble.getMonth());
+    updateForm.setYear(trouble.getYear());
     updateForm.setTitle(trouble.getTitle());
     updateForm.setTContent(trouble.getTContent());
 
@@ -143,7 +146,10 @@ public class TroubleController {
     trouble.setTCategory(updateForm.getTCategory());
     trouble.setContract(updateForm.getContract());
     trouble.setWage(updateForm.getWage());
+    trouble.setWon(updateForm.getWon());
     trouble.setHours(updateForm.getHours());
+    trouble.setMonth(updateForm.getMonth());
+    trouble.setYear(updateForm.getYear());
     trouble.setTitle(updateForm.getTitle());
     trouble.setTContent(updateForm.getTContent());
 

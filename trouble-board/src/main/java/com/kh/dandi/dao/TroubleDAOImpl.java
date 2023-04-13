@@ -82,9 +82,12 @@ public class TroubleDAOImpl implements TroubleDAO {
     sb.append("   set nickname = :nickname, ");
     sb.append("       email = :email, ");
     sb.append("       t_category = :tCategory, ");
-//    sb.append("       contract = :contract, ");
+    sb.append("       contract = :contract, ");
     sb.append("       wage = :wage, ");
+    sb.append("       won = :won, ");
     sb.append("       hours = :hours, ");
+    sb.append("       month = :month, ");
+    sb.append("       year = :year, ");
     sb.append("       title = :title, ");
     sb.append("       t_content = :tContent ");
 //    sb.append("       hit = :hit");
@@ -103,7 +106,10 @@ public class TroubleDAOImpl implements TroubleDAO {
             .addValue("tCategory", trouble.getTCategory())
             .addValue("contract", trouble.getContract())
             .addValue("wage", trouble.getWage())
+            .addValue("won", trouble.getWon())
             .addValue("hours", trouble.getHours())
+            .addValue("month", trouble.getMonth())
+            .addValue("year", trouble.getYear())
             .addValue("title", trouble.getTitle())
             .addValue("tContent", trouble.getTContent())
             .addValue("tId", tId);
@@ -137,6 +143,7 @@ public class TroubleDAOImpl implements TroubleDAO {
     StringBuffer sb = new StringBuffer();
     sb.append("select t_id, nickname, title, hit, cdate ");
     sb.append("  from trouble_board ");
+    sb.append("  order by t_id DESC");
 
     List<Trouble> list = template.query(
             sb.toString(),

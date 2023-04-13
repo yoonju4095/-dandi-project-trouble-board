@@ -41,6 +41,7 @@
 
 .troubleAdd .div_2 li select {
   height: 25px;
+  width: 80px;
 }
 
 .troubleAdd .div_1,
@@ -67,6 +68,23 @@
 /* 파일선택 */
 #file {
   height: 25px;
+}
+
+#id {
+  display: none;
+}
+
+#wage,
+#hour,
+#won{
+ margin-right: 5px;
+}
+
+#month,
+#year{
+ margin-left: 5px;
+ margin-right: 5px;
+ width: 55px;
 }
 
 /* 등록, 취소 버튼 */

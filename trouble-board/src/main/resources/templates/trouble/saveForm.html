@@ -105,7 +105,7 @@
               <label for="notWritten">작성안함</label>
             </li>
             <li>
-              <select size="1" th:field="*{wage}">
+              <select size="1" id="wage" th:field="*{wage}">
                 <option value="">선택</option>
                 <option value="시급">시급</option>
                 <option value="일급">일급</option>
@@ -114,7 +114,7 @@
                 <option value="연봉">연봉</option>
                 <option value="건별">건별</option>
               </select>
-              <input type="text" th:field="*{won}">원
+              <input type="text" id="won" th:field="*{won}">원
             </li>
             <li>
               <select size="1" id="hour" th:field="*{hours}">
