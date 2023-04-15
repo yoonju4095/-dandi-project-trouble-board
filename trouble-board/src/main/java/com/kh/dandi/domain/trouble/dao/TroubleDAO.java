@@ -1,4 +1,4 @@
-package com.kh.dandi.dao;
+package com.kh.dandi.domain.trouble.dao;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,6 +19,14 @@ public interface TroubleDAO {
 
   // 고민 목록
   List<Trouble> findAll();
+
+  List<Trouble> findAll(String tCategory);
+
+  List<Trouble> findAll(int startRec, int endRec);
+  List<Trouble> findAll(String tCategory, int startRec, int endRec);
+
+  // 고민 검색
+  List<Trouble> findAll(TroubleFilter troubleFilter);
 
   // 조회수 증가
   int updateHit(Long tId);

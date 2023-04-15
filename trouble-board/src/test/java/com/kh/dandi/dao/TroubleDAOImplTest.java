@@ -1,5 +1,7 @@
 package com.kh.dandi.dao;
 
+import com.kh.dandi.domain.trouble.dao.Trouble;
+import com.kh.dandi.domain.trouble.dao.TroubleDAO;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

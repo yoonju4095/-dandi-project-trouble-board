@@ -1,6 +1,7 @@
-package com.kh.dandi.svc;
+package com.kh.dandi.domain.trouble.svc;
 
-import com.kh.dandi.dao.Trouble;
+import com.kh.dandi.domain.trouble.dao.Trouble;
+import com.kh.dandi.domain.trouble.dao.TroubleFilter;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,6 +14,9 @@ public interface TroubleSVC {
   // 조회
   Optional<Trouble> findById(Long tId);
 
+  // 검색
+  List<Trouble> findAll(TroubleFilter troubleFilter);
+
   // 수정
   int update(Long tId, Trouble trouble);
 
@@ -21,6 +25,8 @@ public interface TroubleSVC {
 
   // 목록
   List<Trouble> findAll();
+
+  List<Trouble> findAll(int startRec, int endRec);
 
   //조회수증가
   int increaseHit(Long tId);

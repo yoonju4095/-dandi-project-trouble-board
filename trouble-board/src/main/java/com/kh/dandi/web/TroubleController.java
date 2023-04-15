@@ -1,7 +1,7 @@
 package com.kh.dandi.web;
 
-import com.kh.dandi.dao.Trouble;
-import com.kh.dandi.svc.TroubleSVC;
+import com.kh.dandi.domain.trouble.dao.Trouble;
+import com.kh.dandi.domain.trouble.svc.TroubleSVC;
 import com.kh.dandi.web.form.trouble.DetailForm;
 import com.kh.dandi.web.form.trouble.SaveForm;
 import com.kh.dandi.web.form.trouble.UpdateForm;

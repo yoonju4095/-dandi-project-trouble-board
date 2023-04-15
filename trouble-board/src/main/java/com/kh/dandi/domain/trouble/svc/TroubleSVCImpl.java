@@ -1,7 +1,8 @@
-package com.kh.dandi.svc;
+package com.kh.dandi.domain.trouble.svc;
 
-import com.kh.dandi.dao.Trouble;
-import com.kh.dandi.dao.TroubleDAO;
+import com.kh.dandi.domain.trouble.dao.Trouble;
+import com.kh.dandi.domain.trouble.dao.TroubleDAO;
+import com.kh.dandi.domain.trouble.dao.TroubleFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,11 @@ public class TroubleSVCImpl implements TroubleSVC {
     Optional<Trouble> trouble = troubleDAO.findById(tId);
     troubleDAO.updateHit(tId);
     return trouble;
+  }
+
+  @Override
+  public List<Trouble> findAll(TroubleFilter troubleFilter) {
+    return troubleDAO.findAll(troubleFilter);
   }
 
   @Override

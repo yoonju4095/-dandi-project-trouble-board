@@ -1,10 +1,11 @@
-package com.kh.dandi.dao;
+package com.kh.dandi.domain.trouble.dao;
 
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -12,6 +13,7 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import org.thymeleaf.util.StringUtils;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -153,6 +155,111 @@ public class TroubleDAOImpl implements TroubleDAO {
     return list;
   }
 
+  //카테고리별 목록
+  @Override
+  public List<Trouble> findAll(String tCategory) {
+    StringBuffer sql = new StringBuffer();
+    sql.append("SELECT ");
+    sql.append("  t_id, ");
+    sql.append("  nickname, ");
+    sql.append("  email, ");
+    sql.append("  t_category, ");
+    sql.append("  contract, ");
+    sql.append("  wage, ");
+    sql.append("  won, ");
+    sql.append("  hours, ");
+    sql.append("  month, ");
+    sql.append("  year, ");
+    sql.append("  title, ");
+    sql.append("  t_content, ");
+    sql.append("  hit, ");
+    sql.append("  cdate ");
+    sql.append("FROM ");
+    sql.append("  trouble_board ");
+    sql.append("WHERE t_category = :tCategory ");
+    sql.append("Order by t_id desc ");
+
+//    JdbcTemplate jdbcTemplate = null;
+//    List<Trouble> list = jdbcTemplate.query(sql.toString(), new BeanPropertyRowMapper<>(Trouble.class),tCategory);
+
+    List<Trouble> list = template.query(
+            sql.toString(),
+            BeanPropertyRowMapper.newInstance(Trouble.class)  // 레코드 컬럼과 자바객체 멤버필드가 동일한 이름일경우, camelcase지원
+    );
+
+    return list;
+  }
+
+  @Override
+  public List<Trouble> findAll(int startRec, int endRec) {
+    StringBuffer sql = new StringBuffer();
+    sql.append("select t1.* ");
+    sql.append("from( ");
+    sql.append("    SELECT ");
+    sql.append("    ROW_NUMBER() OVER (ORDER BY bgroup DESC, step ASC) no, ");
+    sql.append("    bbs_id, ");
+    sql.append("    bcategory, ");
+    sql.append("    title, ");
+    sql.append("    email, ");
+    sql.append("    nickname, ");
+    sql.append("    hit, ");
+    sql.append("    bcontent, ");
+    sql.append("    pbbs_id, ");
+    sql.append("    bgroup, ");
+    sql.append("    step, ");
+    sql.append("    bindent, ");
+    sql.append("    status, ");
+    sql.append("    cdate, ");
+    sql.append("    udate ");
+    sql.append("    FROM trouble_board) t1 ");
+    sql.append("where t1.no between ? and ? ");
+
+    JdbcTemplate jdbcTemplate = null;
+    List<Trouble> list = jdbcTemplate.query(
+            sql.toString(),
+            new BeanPropertyRowMapper<>(Trouble.class),
+            startRec, endRec
+    );
+    return list;
+  }
+
+  @Override
+  public List<Trouble> findAll(String tCategory, int startRec, int endRec) {
+    StringBuffer sql = new StringBuffer();
+    sql.append("select trouble_board.* ");
+    sql.append("from( ");
+    sql.append("    SELECT ");
+    sql.append("      ROW_NUMBER() OVER (ORDER BY bbs_id DESC) no, ");
+    sql.append("      bbs_id, ");
+    sql.append("      bcategory, ");
+    sql.append("      title, ");
+    sql.append("      email, ");
+    sql.append("      nickname, ");
+    sql.append("      hit, ");
+    sql.append("      bcontent, ");
+    sql.append("      pbbs_id, ");
+    sql.append("      bgroup, ");
+    sql.append("      step, ");
+    sql.append("      bindent, ");
+    sql.append("      status, ");
+    sql.append("      cdate, ");
+    sql.append("      udate ");
+    sql.append("    FROM bbs ");
+    sql.append("   where bcategory = ? ) t1 ");
+    sql.append("where t1.no between ? and ? ");
+
+
+    JdbcTemplate jdbcTemplate = null;
+    List<Trouble> list = jdbcTemplate.query(
+            sql.toString(),
+            new BeanPropertyRowMapper<>(Trouble.class),
+            tCategory, startRec, endRec
+    );
+    return list;
+  }
+
+
+
   /**
    * @return 조회수
    */
@@ -182,6 +289,105 @@ public class TroubleDAOImpl implements TroubleDAO {
     Map<String,String> param = new LinkedHashMap<>();
     Integer rows = template.queryForObject(sql, param, Integer.class);
     return rows;
+  }
+
+  /**
+   * @return 고민 검색
+   */
+  @Override
+  public List<Trouble> findAll(TroubleFilter troubleFilter) {
+    StringBuffer sql = new StringBuffer();
+    sql.append("select trouble_board.* ");
+    sql.append("from( ");
+    sql.append("    SELECT  ROW_NUMBER() OVER (ORDER BY bgroup DESC, step ASC) no, ");
+    sql.append("            t_id, ");
+    sql.append("            nickname, ");
+    sql.append("            email, ");
+    sql.append("            t_category, ");
+    sql.append("            contract, ");
+    sql.append("            wage, ");
+    sql.append("            won, ");
+    sql.append("            hours, ");
+    sql.append("            month, ");
+    sql.append("            year, ");
+    sql.append("            title, ");
+    sql.append("            t_content, ");
+    sql.append("            hit, ");
+    sql.append("            cdate, ");
+    sql.append("            udate ");
+    sql.append("      FROM trouble_board ");
+    sql.append("     WHERE ");
+
+    // 분류
+    sql = dynamicQuery(troubleFilter, sql);
+
+    sql.append(") t1 ");
+    sql.append("where t1.no between :startRec and :endRec ");
+
+    SqlParameterSource namedParameters = new MapSqlParameterSource()
+            .addValue("startRec", troubleFilter.getStartRec())
+            .addValue("endRec", troubleFilter.getEndRec())
+            .addValue("category", troubleFilter.getCategory());
+
+    List<Trouble> list = null;
+
+    //게시판 전체
+//    if(StringUtils.isEmpty(troubleFilter.getCategory())){
+//      list = template.query(
+//              sql.toString(),
+//              new BeanPropertyRowMapper<>(Trouble.class),
+//              namedParameters
+//      );
+      //게시판 분류
+//    }else{
+//      namedParameters.addValue("category", troubleFilter.getCategory());
+//      list = template.query(
+//              sql.toString(),
+//              namedParameters,
+//              new BeanPropertyRowMapper<>(Trouble.class)
+//      );
+//    }
+
+    return list;
+  }
+
+
+  private StringBuffer dynamicQuery(TroubleFilter filterCondition, StringBuffer sql) {
+    //분류
+//    if(StringUtils.isEmpty(filterCondition.getCategory())){
+//
+//    }else{
+//      sql.append("       bcategory = ? ");
+//    }
+
+    //분류,검색유형,검색어 존재
+    if(!StringUtils.isEmpty(filterCondition.getSearchType()) &&
+            !StringUtils.isEmpty(filterCondition.getKeyword())){
+
+      sql.append(" AND ");
+    }
+
+    //검색유형
+    switch (filterCondition.getSearchType()){
+      case "TC":  //제목 + 내용
+        sql.append("    (  title    like '%"+ filterCondition.getKeyword()+"%' ");
+        sql.append("    or bcontent like '%"+ filterCondition.getKeyword()+"%' )");
+        break;
+      case "T":   //제목
+        sql.append("       title    like '%"+ filterCondition.getKeyword()+"%' ");
+        break;
+      case "C":   //내용
+        sql.append("       bcontent like '%"+ filterCondition.getKeyword()+"%' ");
+        break;
+      case "E":   //아이디(이메일)
+        sql.append("       email    like '%"+ filterCondition.getKeyword()+"%' ");
+        break;
+      case "N":   //별칭
+        sql.append("       nickname like '%"+ filterCondition.getKeyword()+"%' ");
+        break;
+      default:
+    }
+    return sql;
   }
 
   //수동 매핑

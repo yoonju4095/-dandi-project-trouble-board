@@ -1,4 +1,4 @@
-package com.kh.dandi.dao;
+package com.kh.dandi.domain.trouble.dao;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

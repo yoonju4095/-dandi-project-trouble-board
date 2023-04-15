@@ -71,7 +71,7 @@ th {
 .add {
   display: flex;
   justify-content: flex-end;
-  padding: 20px 70px 50px;
+  padding: 20px;
   justify-content: center;
 }
 
@@ -81,3 +81,26 @@ th {
   padding: 5px;
   cursor: pointer;
 }
+
+.page {
+  width: 100%;
+  text-align: center;
+  padding: 20px;
+}
+.page button {
+  border: none;
+  border-radius: 4px;
+  height: 30px;
+}
+.page .prevBtn,
+.page .nextBtn {
+  background-color: var(--color-grey1);
+}
+
+.page .pageBtns {
+  background-color: var(--color-main-background);
+}
+.pageBtns.active {
+  background-color: var(--color-main-point);
+}
+
