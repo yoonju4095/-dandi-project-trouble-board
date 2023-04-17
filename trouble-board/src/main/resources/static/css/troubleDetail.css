@@ -75,6 +75,22 @@
   border-top: 1px solid #dadada;
 }
 
+#content{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.view__img,
+.view__img img{
+  display: flex;
+  align-items: flex-start;
+  width: 700px;
+  height: 500px;
+}
+
+
 /* 제목 */
 #title {
   width: 800px;

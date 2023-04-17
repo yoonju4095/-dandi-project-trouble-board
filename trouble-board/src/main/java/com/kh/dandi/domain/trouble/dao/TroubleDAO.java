@@ -20,9 +20,9 @@ public interface TroubleDAO {
   // 고민 목록
   List<Trouble> findAll();
 
-  List<Trouble> findAll(String tCategory);
+  List<Trouble> findAll(String category);
 
-  List<Trouble> findAll(int startRec, int endRec);
+  List<Trouble> findAllPaging(int startRec, int endRec);
   List<Trouble> findAll(String tCategory, int startRec, int endRec);
 
   // 고민 검색
@@ -32,5 +32,11 @@ public interface TroubleDAO {
   int updateHit(Long tId);
 
   // 등록된 고민 건수
-  int countOfRecord();
+//  int countOfRecord();
+
+
+//  전체건수
+  int totalCount();
+  int totalCount(String tCategory);
+  int totalCount(TroubleFilter troubleFilter);
 }

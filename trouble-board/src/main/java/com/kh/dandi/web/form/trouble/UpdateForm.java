@@ -1,6 +1,9 @@
 package com.kh.dandi.web.form.trouble;
 
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @Data
 public class UpdateForm {
@@ -17,6 +20,8 @@ public class UpdateForm {
   private String title;
   private String tContent;
   private Long hit;
+
+  private List<MultipartFile> imageFiles;
 
 //  private Long ptroubleId;
 //  private Long bGroup;

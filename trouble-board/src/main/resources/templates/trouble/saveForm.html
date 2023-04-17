@@ -66,7 +66,7 @@
   <!-- 메인: 고민게시판 작성-->
   <div>
     <main>
-      <form id="frm" action="" method="post" th:object="${saveForm}">
+      <form id="frm" action="" method="post" th:object="${saveForm}" enctype="multipart/form-data">
 
       <div class="troubleAdd">
         <div class="div_1">
@@ -155,7 +155,7 @@
               <textarea name="" th:field="*{tContent}" placeholder="내용을 입력해주세요" rows="30"></textarea>
             </li>
             <li>
-              <input type="file" id="file" multiple>
+              <input type="file" id="file" th:field="*{imageFiles}" multiple>
             </li>
           </ul>
         </div>
@@ -211,6 +211,7 @@
   <div class="sp10"></div>
 </div>
 <script>
+
 </script>
 </body>
 </html>

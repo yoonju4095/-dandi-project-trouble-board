@@ -82,25 +82,35 @@ th {
   cursor: pointer;
 }
 
-.page {
-  width: 100%;
-  text-align: center;
-  padding: 20px;
-}
-.page button {
-  border: none;
-  border-radius: 4px;
-  height: 30px;
-}
-.page .prevBtn,
-.page .nextBtn {
-  background-color: var(--color-grey1);
+.troublePage{
+  display: flex;
+  justify-content: flex-end;
+  justify-content: center;
+  padding: 25px;
 }
 
-.page .pageBtns {
-  background-color: var(--color-main-background);
+.troublePage a{
+display:block;
+	margin:0 3px;
+	float:left;
+	border:1px solid #e6e6e6;
+	width:28px;
+	height:28px;
+	line-height:28px;
+	text-align:center;
+	background-color:#fff;
+	font-size:13px;
+	color:#999999;
+	text-decoration:none;
 }
-.pageBtns.active {
-  background-color: var(--color-main-point);
+
+.troublePage a.active {
+	background-color:#42454c;
+	color:#fff;
+	border:1px solid #42454c;
+}
+
+.pageItem{
+  margin: 5px;
 }
 

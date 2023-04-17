@@ -15,7 +15,6 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import org.thymeleaf.util.StringUtils;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -27,6 +26,7 @@ public class TroubleDAOImpl implements TroubleDAO {
 
   private final NamedParameterJdbcTemplate template;
 
+  private final JdbcTemplate jdbcTemplate;
   /**
    * 등록
    *
@@ -157,7 +157,7 @@ public class TroubleDAOImpl implements TroubleDAO {
 
   //카테고리별 목록
   @Override
-  public List<Trouble> findAll(String tCategory) {
+  public List<Trouble> findAll(String category) {
     StringBuffer sql = new StringBuffer();
     sql.append("SELECT ");
     sql.append("  t_id, ");
@@ -191,36 +191,37 @@ public class TroubleDAOImpl implements TroubleDAO {
   }
 
   @Override
-  public List<Trouble> findAll(int startRec, int endRec) {
+  public List<Trouble> findAllPaging(int startRec, int endRec) {
     StringBuffer sql = new StringBuffer();
     sql.append("select t1.* ");
     sql.append("from( ");
     sql.append("    SELECT ");
-    sql.append("    ROW_NUMBER() OVER (ORDER BY bgroup DESC, step ASC) no, ");
-    sql.append("    bbs_id, ");
-    sql.append("    bcategory, ");
-    sql.append("    title, ");
-    sql.append("    email, ");
-    sql.append("    nickname, ");
-    sql.append("    hit, ");
-    sql.append("    bcontent, ");
-    sql.append("    pbbs_id, ");
-    sql.append("    bgroup, ");
-    sql.append("    step, ");
-    sql.append("    bindent, ");
-    sql.append("    status, ");
-    sql.append("    cdate, ");
-    sql.append("    udate ");
-    sql.append("    FROM trouble_board) t1 ");
-    sql.append("where t1.no between ? and ? ");
+    sql.append("  rownum no, ");
+    sql.append("  t_id, ");
+    sql.append("  nickname, ");
+    sql.append("  email, ");
+    sql.append("  t_category, ");
+    sql.append("  contract, ");
+    sql.append("  wage, ");
+    sql.append("  won, ");
+    sql.append("  hours, ");
+    sql.append("  month, ");
+    sql.append("  year, ");
+    sql.append("  title, ");
+    sql.append("  t_content, ");
+    sql.append("  hit, ");
+    sql.append("  cdate ");
+    sql.append("    FROM trouble_board order by t_id DESC) t1 ");
+    sql.append("where no between :startRec and :endRec ");
 
-    JdbcTemplate jdbcTemplate = null;
-    List<Trouble> list = jdbcTemplate.query(
+    Map<String, Integer> param = Map.of("startRec", startRec, "endRec", endRec);
+    List<Trouble> listPaging = template.query(
             sql.toString(),
-            new BeanPropertyRowMapper<>(Trouble.class),
-            startRec, endRec
+            param,
+            BeanPropertyRowMapper.newInstance(Trouble.class)
     );
-    return list;
+
+    return listPaging;
   }
 
   @Override
@@ -230,20 +231,20 @@ public class TroubleDAOImpl implements TroubleDAO {
     sql.append("from( ");
     sql.append("    SELECT ");
     sql.append("      ROW_NUMBER() OVER (ORDER BY bbs_id DESC) no, ");
-    sql.append("      bbs_id, ");
-    sql.append("      bcategory, ");
-    sql.append("      title, ");
-    sql.append("      email, ");
-    sql.append("      nickname, ");
-    sql.append("      hit, ");
-    sql.append("      bcontent, ");
-    sql.append("      pbbs_id, ");
-    sql.append("      bgroup, ");
-    sql.append("      step, ");
-    sql.append("      bindent, ");
-    sql.append("      status, ");
-    sql.append("      cdate, ");
-    sql.append("      udate ");
+//    sql.append("      bbs_id, ");
+//    sql.append("      bcategory, ");
+//    sql.append("      title, ");
+//    sql.append("      email, ");
+//    sql.append("      nickname, ");
+//    sql.append("      hit, ");
+//    sql.append("      bcontent, ");
+//    sql.append("      pbbs_id, ");
+//    sql.append("      bgroup, ");
+//    sql.append("      step, ");
+//    sql.append("      bindent, ");
+//    sql.append("      status, ");
+//    sql.append("      cdate, ");
+//    sql.append("      udate ");
     sql.append("    FROM bbs ");
     sql.append("   where bcategory = ? ) t1 ");
     sql.append("where t1.no between ? and ? ");
@@ -283,13 +284,13 @@ public class TroubleDAOImpl implements TroubleDAO {
   /**
    * @return 고민 건수
    */
-  @Override
-  public int countOfRecord() {
-    String sql = "select count(*) from trouble_board ";
-    Map<String,String> param = new LinkedHashMap<>();
-    Integer rows = template.queryForObject(sql, param, Integer.class);
-    return rows;
-  }
+//  @Override
+//  public int countOfRecord() {
+//    String sql = "select count(*) from trouble_board ";
+//    Map<String,String> param = new LinkedHashMap<>();
+//    Integer rows = template.queryForObject(sql, param, Integer.class);
+//    return rows;
+//  }
 
   /**
    * @return 고민 검색
@@ -389,6 +390,82 @@ public class TroubleDAOImpl implements TroubleDAO {
     }
     return sql;
   }
+
+
+  //전체건수
+  @Override
+  public int totalCount() {
+
+//    String sql = "select count(*) from bbs";
+//
+//    Integer cnt = jdbcTemplate.queryForObject(sql, Integer.class);
+
+    String sql = "select count(*) from trouble_board";
+    MapSqlParameterSource params = new MapSqlParameterSource();
+    Integer cnt = template.queryForObject(sql, params, Integer.class);
+
+    return cnt;
+  }
+
+  @Override
+  public int totalCount(String bcategory) {
+
+//    String sql = "select count(*) from trouble_board where bcategory = ? ";
+//
+//    Integer cnt = jdbcTemplate.queryForObject(sql, Integer.class, bcategory);
+
+    String sql = "select count(*) from trouble_board where t_category = :tcategory";
+    MapSqlParameterSource params = new MapSqlParameterSource();
+    params.addValue("tcategory", bcategory);
+    Integer cnt = template.queryForObject(sql, params, Integer.class);
+
+    return cnt;
+  }
+
+  @Override
+  public int totalCount(TroubleFilter troubleFilter) {
+
+//    StringBuffer sql = new StringBuffer();
+//
+//    sql.append("select count(*) ");
+//    sql.append("  from trouble_board  ");
+//    sql.append(" where  ");
+//
+//    sql = dynamicQuery(troubleFilter, sql);
+//
+//    Integer cnt = 0;
+//    //게시판 전체 검색 건수
+//    if(StringUtils.isEmpty(troubleFilter.getCategory())) {
+//      cnt = jdbcTemplate.queryForObject(
+//              sql.toString(), Integer.class
+//      );
+//      //게시판 분류별 검색 건수
+//    }else{
+//      cnt = jdbcTemplate.queryForObject(
+//              sql.toString(), Integer.class,
+//              troubleFilter.getCategory()
+//      );
+//    }
+    StringBuilder sql = new StringBuilder();
+    sql.append("select count(*) from trouble_board ");
+    if(!StringUtils.isEmpty(troubleFilter.getCategory())) {
+      sql.append("where bcategory = :category ");
+    }
+    if(!StringUtils.isEmpty(troubleFilter.getSearchType())) {
+      sql.append("and "+troubleFilter.getSearchType()+" like :keyword ");
+    }
+
+    SqlParameterSource paramMap = new MapSqlParameterSource()
+            .addValue("category", troubleFilter.getCategory())
+            .addValue("keyword", "%"+troubleFilter.getKeyword()+"%");
+
+    Integer cnt = template.queryForObject(sql.toString(), paramMap, Integer.class);
+
+    return cnt;
+  }
+
+
+
 
   //수동 매핑
 //  private RowMapper<Trouble> noticeRowMapper() {

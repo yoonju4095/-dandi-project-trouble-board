@@ -95,46 +95,10 @@
                 <label for="notWritten">작성안함</label>
               </li>
               <li>
-<!--                <select size="1" readonly th:field="*{wage}">-->
-<!--                  <option value="">선택</option>-->
-<!--                  <option value="시급">시급</option>-->
-<!--                  <option value="일급">일급</option>-->
-<!--                  <option value="주급">주급</option>-->
-<!--                  <option value="월급">월급</option>-->
-<!--                  <option value="연봉">연봉</option>-->
-<!--                  <option value="건별">건별</option>-->
-<!--                </select>-->
                 <input type="text" id="wage" readonly th:field="*{wage}">
                 <input type="text" id="won" readonly th:field="*{won}">원
               </li>
               <li>
-<!--                <select size="1" id="hour" readonly th:field="*{hours}">-->
-<!--                  <option value="">선택</option>-->
-<!--                  <option value="1">1</option>-->
-<!--                  <option value="2">2</option>-->
-<!--                  <option value="3">3</option>-->
-<!--                  <option value="4">4</option>-->
-<!--                  <option value="5">5</option>-->
-<!--                  <option value="6">6</option>-->
-<!--                  <option value="7">7</option>-->
-<!--                  <option value="8">8</option>-->
-<!--                  <option value="9">9</option>-->
-<!--                  <option value="10">10</option>-->
-<!--                  <option value="11">11</option>-->
-<!--                  <option value="12">12</option>-->
-<!--                  <option value="13">13</option>-->
-<!--                  <option value="14">14</option>-->
-<!--                  <option value="15">15</option>-->
-<!--                  <option value="16">16</option>-->
-<!--                  <option value="17">17</option>-->
-<!--                  <option value="18">18</option>-->
-<!--                  <option value="19">19</option>-->
-<!--                  <option value="20">20</option>-->
-<!--                  <option value="21">21</option>-->
-<!--                  <option value="22">22</option>-->
-<!--                  <option value="23">23</option>-->
-<!--                  <option value="24">24</option>-->
-<!--                </select>-->
                 <input type="text" id="hour" readonly th:field="*{hours}"><label for="hour">시간</label>
                 <input type="text" id="month" readonly th:field="*{month}"><label for="month">개월</label>
                 <input type="text" id="year" readonly th:field="*{year}"><label for="year">년</label>
@@ -143,11 +107,13 @@
                 <input type="text" id="title" readonly th:field="*{title}" placeholder="제목을 입력해주세요" maxlength="20">
               </li>
               <li id="content">
-                <textarea name="" readonly th:field="*{tContent}" placeholder="내용을 입력해주세요" rows="30"></textarea>
+                <textarea name="" readonly th:field="*{tContent}" placeholder="내용을 입력해주세요" rows="20"></textarea>
+                <div th:each="file : ${imagedFiles}" class="view__img">
+                  <th:block th:if="${#strings.contains(file.ftype,'image')}">
+                    <img th:src="@{|/attach/view/${file.rid}|}" >
+                  </th:block>
+                </div>
               </li>
-<!--              <li>-->
-<!--                <input type="file" id="file" multiple>-->
-<!--              </li>-->
             </ul>
           </div>
         </div>

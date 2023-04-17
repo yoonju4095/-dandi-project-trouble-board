@@ -1,6 +1,9 @@
 package com.kh.dandi.web.form.trouble;
 
+import com.kh.dandi.domain.entity.UploadFile;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 public class DetailForm {
@@ -17,6 +20,9 @@ public class DetailForm {
   private String title;
   private String tContent;
   private Long hit;
+
+  private List<UploadFile> imagedFiles;
+
 
   private Long ptroubleId;
   private Long bGroup;

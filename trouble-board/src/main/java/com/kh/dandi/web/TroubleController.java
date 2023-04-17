@@ -1,19 +1,30 @@
 package com.kh.dandi.web;
 
+import com.kh.dandi.domain.common.file.svc.UploadFileSVC;
+import com.kh.dandi.domain.common.paging.FindCriteria;
+import com.kh.dandi.domain.entity.UploadFile;
 import com.kh.dandi.domain.trouble.dao.Trouble;
+import com.kh.dandi.domain.trouble.dao.TroubleFilter;
 import com.kh.dandi.domain.trouble.svc.TroubleSVC;
+import com.kh.dandi.web.common.AttachFileType;
 import com.kh.dandi.web.form.trouble.DetailForm;
+import com.kh.dandi.web.form.trouble.ListForm;
 import com.kh.dandi.web.form.trouble.SaveForm;
 import com.kh.dandi.web.form.trouble.UpdateForm;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.thymeleaf.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,6 +35,13 @@ import java.util.Optional;
 public class TroubleController {
 
   private final TroubleSVC troubleSVC;
+
+  private final UploadFileSVC uploadFileSVC;
+
+  @Autowired
+  @Qualifier("fc10") //동일한 타입의 객체가 여러개있을때 빈이름을 명시적으로 지정해서 주입받을때
+  private FindCriteria fc;
+
 
   // 등록양식
   @GetMapping("/add")
@@ -63,7 +81,9 @@ public class TroubleController {
     trouble.setTitle(saveForm.getTitle());
     trouble.setTContent(saveForm.getTContent());
 
-    Long saveId = troubleSVC.save(trouble);
+    List<UploadFile> imageFiles = uploadFileSVC.convert(saveForm.getImageFiles(), AttachFileType.F0101);
+
+    Long saveId = troubleSVC.save(trouble, imageFiles);
     redirectAttributes.addAttribute("tId", saveId);
 
     return "redirect:/trouble/{tId}/detail";
@@ -94,6 +114,18 @@ public class TroubleController {
     detailForm.setHit(trouble.getHit());
     detailForm.setCDate(trouble.getCDate());
 
+    log.info("tId={}",tId);
+//
+//    List<UploadFile> imagedFiles = uploadFileSVC.findFilesByCodeWithRid(AttachFileType.F0101,tId);
+//    detailForm.setImagedFiles(imagedFiles);
+
+    //첨부파일조회
+    List<UploadFile> imagedFiles = uploadFileSVC.findFilesByCodeWithRid(AttachFileType.F0101, tId);
+    if(imagedFiles.size() > 0){
+      log.info("ImagedFiles={}",imagedFiles);
+      model.addAttribute("imagedFiles",imagedFiles);
+    }
+
     model.addAttribute("detailForm", detailForm);
     return "trouble/detailForm";
   }
@@ -121,6 +153,15 @@ public class TroubleController {
     updateForm.setTContent(trouble.getTContent());
 
     model.addAttribute("updateForm", updateForm);
+
+    //첨부파일조회
+    List<UploadFile> imagedFiles = uploadFileSVC.findFilesByCodeWithRid(AttachFileType.F0101, tId);
+    if(imagedFiles.size() > 0){
+      log.info("ImagedFiles={}",imagedFiles);
+      model.addAttribute("imagedFiles",imagedFiles);
+    }
+    model.addAttribute("tId",tId);
+
     return "trouble/updateForm";
   }
 
@@ -169,13 +210,121 @@ public class TroubleController {
   }
 
   //목록
-  @GetMapping
-  public String findAll(Model model){
-    List<Trouble> troubles = troubleSVC.findAll();
-    model.addAttribute("troubles", troubles);
-    if (troubles.size() == 0) {
-//      throw new BizException("등록된 상품정보가 없습니다");
+//  @GetMapping
+//  public String findAll(Model model){
+//    List<Trouble> troubles = troubleSVC.findAll();
+//    model.addAttribute("troubles", troubles);
+//    if (troubles.size() == 0) {
+////      throw new BizException("등록된 상품정보가 없습니다");
+//    }
+//    return "trouble/all";
+//  }
+
+  // 검색...........
+
+
+  @GetMapping({"/list",
+          "/list/{reqPage}",
+          "/list/{reqPage}//",
+          "/list/{reqPage}/{searchType}/{keyword}"})
+  public String listAndReqPage(
+          @PathVariable(required = false) Optional<Integer> reqPage,
+          @PathVariable(required = false) Optional<String> searchType,
+          @PathVariable(required = false) Optional<String> keyword,
+          @RequestParam(required = false) Optional<String> category,
+          Model model) {
+    log.info("/list 요청됨{},{},{},{}",reqPage,searchType,keyword,category);
+
+    String cate = getCategory(category);
+
+    //FindCriteria 값 설정
+    fc.getRc().setReqPage(reqPage.orElse(1)); //요청페이지, 요청없으면 1
+    fc.setSearchType(searchType.orElse(""));  //검색유형
+    fc.setKeyword(keyword.orElse(""));        //검색어
+
+    List<Trouble> list = null;
+    //게시물 목록 전체
+    if(category == null || StringUtils.isEmpty(cate)) {
+
+      //검색어 있음
+      if(searchType.isPresent() && keyword.isPresent()){
+        TroubleFilter filterCondition = new TroubleFilter(
+                "",fc.getRc().getStartRec(), fc.getRc().getEndRec(),
+                searchType.get(),
+                keyword.get());
+        fc.setTotalRec(troubleSVC.totalCount(filterCondition));
+        fc.setSearchType(searchType.get());
+        fc.setKeyword(keyword.get());
+        list = troubleSVC.findAll(filterCondition);
+
+        //검색어 없음
+      }else {
+        //총레코드수
+        fc.setTotalRec(troubleSVC.totalCount());
+        list = troubleSVC.findAllPaging(fc.getRc().getStartRec(), fc.getRc().getEndRec());
+      }
+
+      //카테고리별 목록
+    }else{
+      //검색어 있음
+      if(searchType.isPresent() && keyword.isPresent()){
+        TroubleFilter filterCondition = new TroubleFilter(
+                category.get(),fc.getRc().getStartRec(), fc.getRc().getEndRec(),
+                searchType.get(),
+                keyword.get());
+        fc.setTotalRec(troubleSVC.totalCount(filterCondition));
+        fc.setSearchType(searchType.get());
+        fc.setKeyword(keyword.get());
+        list = troubleSVC.findAll(filterCondition);
+        //검색어 없음
+      }else {
+        fc.setTotalRec(troubleSVC.totalCount(cate));
+        list = troubleSVC.findAll(cate, fc.getRc().getStartRec(), fc.getRc().getEndRec());
+      }
     }
+
+    List<ListForm> partOfList = new ArrayList<>();
+    for (Trouble trouble : list) {
+      ListForm listForm = new ListForm();
+      BeanUtils.copyProperties(trouble, listForm);
+      partOfList.add(listForm);
+    }
+
+    model.addAttribute("list", partOfList);
+    model.addAttribute("fc",fc);
+    model.addAttribute("category", cate);
+
+    return "bbs/list";
+  }
+
+  //쿼리스트링 카테고리 읽기, 없으면 ""반환
+  private String getCategory(Optional<String> category) {
+    String cate = category.isPresent()? category.get():"";
+    log.info("category={}", cate);
+    return cate;
+  }
+
+
+  //구인글 목록 페이징
+  @GetMapping({"", "/{reqPage}", "/{reqPage}//"})
+  public String listPaging(
+          @PathVariable(required = false) Optional<Integer> reqPage,
+          Model model
+  ) {
+
+    fc.getRc().setReqPage(reqPage.orElse(1));
+    fc.setTotalRec(troubleSVC.totalCount());
+    List<Trouble> troubleListsPaging = troubleSVC.findAllPaging(fc.getRc().getStartRec(), fc.getRc().getEndRec());
+
+    List<ListForm> partOfList = new ArrayList<>();
+    for (Trouble trouble : troubleListsPaging) {
+      ListForm listForm = new ListForm();
+      BeanUtils.copyProperties(trouble, listForm);
+      partOfList.add(listForm);
+    }
+    model.addAttribute("troubleLists", partOfList);
+    model.addAttribute("fc", fc);
+
     return "trouble/all";
   }
 }
