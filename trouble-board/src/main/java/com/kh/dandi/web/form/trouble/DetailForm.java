@@ -30,5 +30,5 @@ public class DetailForm {
   private Long bindent;
   private String status;
   private String cDate;
-  private Long uDate;
+  private String uDate;
 }

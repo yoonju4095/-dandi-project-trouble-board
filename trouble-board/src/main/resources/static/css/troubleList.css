@@ -33,7 +33,6 @@
   width: 55px;
   padding: 5px;
   cursor: pointer;
-  border: none;
   /* background-color: #a9e7c3; */
 }
 
@@ -105,9 +104,9 @@ display:block;
 }
 
 .troublePage a.active {
-	background-color:#42454c;
+	background-color:#93d6af;
 	color:#fff;
-	border:1px solid #42454c;
+	border:1px solid #93d6af;
 }
 
 .pageItem{

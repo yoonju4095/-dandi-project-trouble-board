@@ -100,7 +100,7 @@
               </td>
               <td th:text="${trouble.nickname}">작성자</td>
               <td th:text="${trouble.hit}">조회수</td>
-<!--              <td th:text="${trouble.cDate}">날짜</td>-->
+              <td th:text="${trouble.cDate}">날짜</td>
 <!--              <td th:text="${#temporals.format(trouble.cDate,'yy/MM/dd')}">작성일1</td>-->
             </tr>
             </tbody>
@@ -141,8 +141,6 @@
           >
         </th:block>
       </div>
-
-
 
       <div class="add">
         <button id="btnAdd" th:onclick="|location.href='@{/trouble/add}'|">글쓰기</button>
@@ -211,8 +209,6 @@
 <!--      </div>-->
 
 
-
-
 <!--      <div class="bbs-search">-->
 <!--        <select id="searchType" name="searchType" th:field="${fc.searchType}">-->
 <!--          <option th:value="TC">제목+내용</option>-->
@@ -224,7 +220,6 @@
 <!--        <input type="text" id="keyword" name="keyword" th:field="${fc.keyword}">-->
 <!--        <button id="searchBtn">검색</button>x-->
 <!--      </div>-->
-
 
     </main>
   </div>

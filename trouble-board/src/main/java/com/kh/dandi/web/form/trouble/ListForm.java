@@ -9,7 +9,6 @@ public class ListForm {
   private String title;
   private String email;
   private String nickname;
-  private String cdate;
+  private String cDate;
   private Long hit;
-//  private int bindent;
 }

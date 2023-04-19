@@ -29,13 +29,6 @@ public class TroubleSVCImpl implements TroubleSVC {
   @Transactional
   @Override
   public Long save(Trouble trouble, List<UploadFile> uploadFiles) {
-//    entityManager.persist(bbsh);
-//    Long bbshId = bbsh.getBbshId();
-//    if(uploadFiles.size() > 0) {
-//      uploadFiles.stream().forEach(file -> file.setRid(bbshId));
-//      uploadFileSVC.addFiles(uploadFiles);
-//    }
-//    return bbshId;
     Long tId = save(trouble);
     if(uploadFiles.size() > 0) {
       uploadFiles.stream().forEach(file-> file.setRid(tId));

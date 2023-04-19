@@ -115,7 +115,7 @@ public class TroubleController {
     detailForm.setCDate(trouble.getCDate());
 
     log.info("tId={}",tId);
-//
+
 //    List<UploadFile> imagedFiles = uploadFileSVC.findFilesByCodeWithRid(AttachFileType.F0101,tId);
 //    detailForm.setImagedFiles(imagedFiles);
 

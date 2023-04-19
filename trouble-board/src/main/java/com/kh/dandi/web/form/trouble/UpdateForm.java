@@ -28,6 +28,6 @@ public class UpdateForm {
 //  private Long step;
 //  private Long bindent;
 //  private String status;
-//  private Long cDate;
+  private String  cDate;
 //  private Long uDate;
 }
