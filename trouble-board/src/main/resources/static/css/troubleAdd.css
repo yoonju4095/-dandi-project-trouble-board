@@ -98,6 +98,11 @@
   font-size: medium;
   font-weight: bold;
   padding: 5px;
-  width: 55px;
+  width: 65px;
+  height: 35px;
   cursor: pointer;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  background-color: #53bc89;
 }

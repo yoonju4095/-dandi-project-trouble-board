@@ -25,15 +25,47 @@
   font-weight: bold;
 }
 
-/* .search input {
-  border-color: lightgray;
-} */
+.search input,
+.search select,
+.search .searchBtn {
+  display: flex;
+  justify-content: center;
+  margin: 3px;
+}
+
+.search input{
+  border-radius: 5px;
+  border: 1px solid #4cbd86;
+  color: #4cbd86;
+}
+
+.search input::placeholder{
+  color: #4cbd86;
+}
+
+.search input:focus {
+  outline: none;
+}
+
+
+.search select{
+  border-radius: 5px;
+  border-color: #4cbd86;
+  color: #53bc89;
+}
+
+.search select:focus{
+  outline: none;
+}
 
 .search .searchBtn {
   width: 55px;
   padding: 5px;
   cursor: pointer;
-  /* background-color: #a9e7c3; */
+  border-radius: 5px;
+  background-color: #53bc89;
+  border: none;
+  color: white;
 }
 
 .noticeList {
@@ -62,30 +94,38 @@ td {
 }
 
 th {
-  background-color: #93d6af;
+  background-color: #53bc89;
   text-align: center;
   font-weight: bold;
+  color: white;
 }
 
 .add {
   display: flex;
-  justify-content: flex-end;
-  padding: 20px;
   justify-content: center;
+  padding-left: 900px;
+  padding-bottom: 30px;
 }
 
 /* 글쓰기 버튼 */
 .add button {
   font-weight: bold;
+  font-size: 14px;
   padding: 5px;
+  width: 65px;
+  height: 35px;
+  border: none;
+  color: white;
   cursor: pointer;
+  border-radius: 5px;
+  background-color: #53bc89;
 }
 
 .troublePage{
   display: flex;
   justify-content: flex-end;
   justify-content: center;
-  padding: 25px;
+  padding-top: 25px;
 }
 
 .troublePage a{
@@ -104,9 +144,9 @@ display:block;
 }
 
 .troublePage a.active {
-	background-color:#93d6af;
+	background-color:#53bc89;
 	color:#fff;
-	border:1px solid #93d6af;
+	border:1px solid #53bc89;
 }
 
 .pageItem{
