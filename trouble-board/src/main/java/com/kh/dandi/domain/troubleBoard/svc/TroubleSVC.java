@@ -1,8 +1,8 @@
-package com.kh.dandi.domain.trouble.svc;
+package com.kh.dandi.domain.troubleBoard.svc;
 
 import com.kh.dandi.domain.entity.UploadFile;
-import com.kh.dandi.domain.trouble.dao.Trouble;
-import com.kh.dandi.domain.trouble.dao.TroubleFilter;
+import com.kh.dandi.domain.troubleBoard.dao.Trouble;
+import com.kh.dandi.domain.troubleBoard.dao.TroubleFilter;
 
 import java.util.List;
 import java.util.Optional;

@@ -1,4 +1,4 @@
-package com.kh.dandi.domain.trouble.dao;
+package com.kh.dandi.domain.troubleBoard.dao;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

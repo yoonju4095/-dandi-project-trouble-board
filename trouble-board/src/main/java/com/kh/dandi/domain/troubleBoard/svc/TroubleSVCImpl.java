@@ -1,10 +1,10 @@
-package com.kh.dandi.domain.trouble.svc;
+package com.kh.dandi.domain.troubleBoard.svc;
 
 import com.kh.dandi.domain.common.file.svc.UploadFileSVC;
 import com.kh.dandi.domain.entity.UploadFile;
-import com.kh.dandi.domain.trouble.dao.Trouble;
-import com.kh.dandi.domain.trouble.dao.TroubleDAO;
-import com.kh.dandi.domain.trouble.dao.TroubleFilter;
+import com.kh.dandi.domain.troubleBoard.dao.Trouble;
+import com.kh.dandi.domain.troubleBoard.dao.TroubleDAO;
+import com.kh.dandi.domain.troubleBoard.dao.TroubleFilter;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

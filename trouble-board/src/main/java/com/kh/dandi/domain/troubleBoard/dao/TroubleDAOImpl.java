@@ -1,4 +1,4 @@
-package com.kh.dandi.domain.trouble.dao;
+package com.kh.dandi.domain.troubleBoard.dao;
 
 
 import lombok.RequiredArgsConstructor;
@@ -282,17 +282,6 @@ public class TroubleDAOImpl implements TroubleDAO {
   }
 
   /**
-   * @return 고민 건수
-   */
-//  @Override
-//  public int countOfRecord() {
-//    String sql = "select count(*) from trouble_board ";
-//    Map<String,String> param = new LinkedHashMap<>();
-//    Integer rows = template.queryForObject(sql, param, Integer.class);
-//    return rows;
-//  }
-
-  /**
    * @return 고민 검색
    */
   @Override
@@ -391,14 +380,9 @@ public class TroubleDAOImpl implements TroubleDAO {
     return sql;
   }
 
-
   //전체건수
   @Override
   public int totalCount() {
-
-//    String sql = "select count(*) from bbs";
-//
-//    Integer cnt = jdbcTemplate.queryForObject(sql, Integer.class);
 
     String sql = "select count(*) from trouble_board";
     MapSqlParameterSource params = new MapSqlParameterSource();
@@ -409,10 +393,6 @@ public class TroubleDAOImpl implements TroubleDAO {
 
   @Override
   public int totalCount(String bcategory) {
-
-//    String sql = "select count(*) from trouble_board where bcategory = ? ";
-//
-//    Integer cnt = jdbcTemplate.queryForObject(sql, Integer.class, bcategory);
 
     String sql = "select count(*) from trouble_board where t_category = :tcategory";
     MapSqlParameterSource params = new MapSqlParameterSource();
@@ -425,27 +405,6 @@ public class TroubleDAOImpl implements TroubleDAO {
   @Override
   public int totalCount(TroubleFilter troubleFilter) {
 
-//    StringBuffer sql = new StringBuffer();
-//
-//    sql.append("select count(*) ");
-//    sql.append("  from trouble_board  ");
-//    sql.append(" where  ");
-//
-//    sql = dynamicQuery(troubleFilter, sql);
-//
-//    Integer cnt = 0;
-//    //게시판 전체 검색 건수
-//    if(StringUtils.isEmpty(troubleFilter.getCategory())) {
-//      cnt = jdbcTemplate.queryForObject(
-//              sql.toString(), Integer.class
-//      );
-//      //게시판 분류별 검색 건수
-//    }else{
-//      cnt = jdbcTemplate.queryForObject(
-//              sql.toString(), Integer.class,
-//              troubleFilter.getCategory()
-//      );
-//    }
     StringBuilder sql = new StringBuilder();
     sql.append("select count(*) from trouble_board ");
     if(!StringUtils.isEmpty(troubleFilter.getCategory())) {
@@ -464,21 +423,4 @@ public class TroubleDAOImpl implements TroubleDAO {
     return cnt;
   }
 
-
-
-
-  //수동 매핑
-//  private RowMapper<Trouble> noticeRowMapper() {
-//    return (rs, rowNum) -> {
-//      Trouble notice = new Trouble();
-//      notice.setId(rs.getLong("id"));
-//      notice.setTitle(rs.getString("title"));
-//      notice.setContent(rs.getString("content"));
-//      notice.setAuthor(rs.getString("author"));
-//      notice.setHit(rs.getLong("hit"));
-//      notice.setCDate(rs.getLong("cdate"));
-//      notice.setUDate(rs.getLong("udate"));
-//      return notice;
-//    };
-//  }
 }
